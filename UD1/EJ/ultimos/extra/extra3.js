@@ -1,6 +1,10 @@
 let operation = prompt("Enter the operation: (addition, subtraction, multiplication, division)");
-let number1 = parseInt(prompt("Enter number 1: "));
-let number2 = parseInt(prompt("Enter number 2: "));
+
+if (operation == "exit"){
+    document.writeln("end of program");
+} else {
+    let number1 = parseInt(prompt("Enter number 1: "));
+    let number2 = parseInt(prompt("Enter number 2: ")); }
 
 switch (operation) {
     case "addition":
@@ -20,6 +24,6 @@ switch (operation) {
         break;
 
     default:
-        document.writeln("Error")
+        document.writeln("end of program");
         break;
 }

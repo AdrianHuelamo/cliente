@@ -1,5 +1,5 @@
 let teachers = ["Jose", "Lola", "Lorenzo", "Mariluz", "Maria Jose"];
-let tname = prompt("Enter teacher's name: ");
+let tname = prompt("Enter teacher's name: ").trim();
 
 let found = false;
 
