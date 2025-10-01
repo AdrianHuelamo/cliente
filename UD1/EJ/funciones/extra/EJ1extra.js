@@ -1,0 +1,1 @@
+document.writeln(Date.now(DD-MM-YYYY))

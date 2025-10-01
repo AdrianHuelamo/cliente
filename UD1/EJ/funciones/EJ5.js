@@ -13,5 +13,5 @@ function prime(x) {
 }
 
 let number = parseInt(prompt("Enter a number: "));
-primenumber = prime(number)
+let primenumber = prime(number)
 document.writeln(primenumber);
