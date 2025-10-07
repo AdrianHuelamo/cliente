@@ -1,4 +1,4 @@
-let capital = x => (x.split(" ")(y => y.charAt(0).toUpperCase() + y.slice(1)).join(" "));
+let capital = x => x.split(" ").map(y => y.charAt(0).toUpperCase() + y.slice(1)).join(" ");
 
 let names = [];
 for (let i=0; i<3; i++) {
