@@ -1,4 +1,4 @@
-let compareGrades = x => x > newGrade;
+let compareGrades = x => x < newGrade;
 
 let grades = [];
 for (let i=0; i<5; i++) {
@@ -6,6 +6,6 @@ for (let i=0; i<5; i++) {
     grades.push(grade);
 }
 
-let newGrade = parseInt(prompt("Enter a new grade: "));
+let newGrade = 5;
 
 document.writeln(grades.some(compareGrades));
