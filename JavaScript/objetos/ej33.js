@@ -51,4 +51,42 @@ let vinylCollection = [
   }
 ]
 
-let findId = parseInt(prompt("Enter an Id: "));
+let fid = parseInt(prompt("Enter an Id: "));
+
+let found = vinylCollection.find(item => item.id === fid);
+
+if (found) {
+  document.writeln("ID: " + found.id + "<br>");
+  document.writeln("Album: " + found.album_title + "<br>");
+  document.writeln("Artist: " + found.artist + "<br>");
+  document.writeln("Tracklist:<br>");
+  for (let t of found.tracklist) {
+    document.writeln("- " + t + "<br>");
+  }
+}else {
+  alert("Not valid ID");
+}
+
+let ok = confirm("Do you want sort the list?")
+if (ok) {
+  let crit = prompt("How do you want sort?: ")
+  switch (crit){
+    case "id":
+      vinylCollection.id.sort();
+      break;
+
+    case "album title":
+      vinylCollection[album_title].sort();
+      break;
+
+    case "artist":
+      vinylCollection[artist].sort();
+      break;
+
+    default:
+      alert("Error");
+      break;
+  }
+} else {
+  document.writeln("<br>Bye")
+}
