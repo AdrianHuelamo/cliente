@@ -51,7 +51,7 @@ let vinylCollection = [
   }
 ]
 
-let fid = parseInt(prompt("Enter an Id: "));
+let fid = parseInt(prompt("Enter an Id: ").trim());
 
 let found = vinylCollection.find(item => item.id === fid);
 
@@ -69,24 +69,29 @@ if (found) {
 
 let ok = confirm("Do you want sort the list?")
 if (ok) {
-  let crit = prompt("How do you want sort?: ")
+  let crit = prompt("How do you want to sort? (id / album / artist): ").toLowerCase();
   switch (crit){
     case "id":
-      vinylCollection.id.sort();
+      vinylCollection.sort((a, b) => a.id - b.id);
       break;
 
-    case "album title":
-      vinylCollection[album_title].sort();
+    case "album":
+      vinylCollection.sort((a, b) => a.album_title.localeCompare(b.album_title));
       break;
 
     case "artist":
-      vinylCollection[artist].sort();
+      vinylCollection.sort((a, b) => a.artist.localeCompare(b.artist));
       break;
 
     default:
-      alert("Error");
+      alert("Error: invalid criteria");
       break;
   }
+  document.writeln("<br><br><b>Sorted List:</b><br>");
+  for (let v of vinylCollection) {
+    document.writeln(`${v.id} - ${v.album_title} - ${v.artist}<br>`);
+  }
+
 } else {
   document.writeln("<br>Bye")
 }

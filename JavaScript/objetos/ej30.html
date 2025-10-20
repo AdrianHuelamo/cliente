@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -35,6 +36,38 @@
         console.time("Set");
         result = set.has("Lola");
         console.timeEnd("Set");
+
+      let bigArray = [];
+        let bigSet = new Set();
+
+        for (let i = 1; i <= 1000000; i++) {
+          bigArray.push(i);
+          bigSet.add(i);
+        }
+
+        console.time("Array find 1");
+        bigArray.indexOf(1);
+        console.timeEnd("Array find 1");
+
+        console.time("Set find 1");
+        bigSet.has(1);
+        console.timeEnd("Set find 1");
+
+        console.time("Array find 1000000");
+        bigArray.indexOf(1000000);
+        console.timeEnd("Array find 1000000");
+
+        console.time("Set find 1000000");
+        bigSet.has(1000000);
+        console.timeEnd("Set find 1000000");
+
+        console.time("Array find 2000000");
+        bigArray.indexOf(2000000);
+        console.timeEnd("Array find 2000000");
+
+        console.time("Set find 2000000");
+        bigSet.has(2000000);
+        console.timeEnd("Set find 2000000");
       };
     </script>
   </head>
