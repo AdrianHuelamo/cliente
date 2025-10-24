@@ -17,5 +17,5 @@ window.onload = function() {
     let link = document.querySelector('a');
     if (link) {
         link.remove();
-}
+    }
 }
