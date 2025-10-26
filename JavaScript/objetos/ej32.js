@@ -21,7 +21,7 @@ console.log(users);
 
 function u21(x){
     return x.age <= 21;
-}
+}+
 function ageEven(x){
     if (x.age % 2 == 0){
         even.push(x.name + " " + x.surname + " " + x.age + " ");

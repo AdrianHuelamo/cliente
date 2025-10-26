@@ -51,7 +51,7 @@ let vinylCollection = [
   }
 ]
 
-let fid = parseInt(prompt("Enter an Id: "));
+let fid = parseInt(prompt("Enter an Id: ").trim());
 
 let found = vinylCollection.find(item => item.id === fid);
 
