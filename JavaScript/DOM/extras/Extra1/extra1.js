@@ -13,7 +13,7 @@ window.onload = function() {
         }
     }
 
-    let greeting = prompt("Enter the greeting of: ");
+    let greeting = prompt("Enter the greeting: ");
 
     for (let i = 0; i < names.length; i++) {       
         let card = document.createElement("div");
