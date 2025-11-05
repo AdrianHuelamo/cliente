@@ -1,28 +1,53 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ej51</title>
-    <script defer src="ej51.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejerccio 51</title>  
+  <script defer src="ej51.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+    }
+    #main-image {
+      width: 400px;
+      height: 250px;
+      object-fit: cover;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .thumbnails {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+    .thumbnails img {
+      width: 80px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .thumbnails img:hover {
+      transform: scale(1.1);
+    }
+  </style>
 </head>
 <body>
-    <div id="viewer-container">
-        <img id="main-image" alt="Imagen principal">
-    </div>
+  <img id="main-image" src="" alt="Main Image">
 
-    <div class="thumbnail-container">
-        <img class="thumbnail" 
-             src="img/bob-esponja.jpg">
-        
-        <img class="thumbnail" src="img/elfary.jpeg">
-        
-        <img class="thumbnail" src="img/marquez.jpeg">
-             
-        <img class="thumbnail" src="img/Coque_tonto.webp">
-    </div>
+  <div class="thumbnails">
+    <img src="https://picsum.photos/id/1015/200/150" data-full="https://picsum.photos/id/1015/800/500" alt="Image 1">
+    <img src="https://picsum.photos/id/1025/200/150" data-full="https://picsum.photos/id/1025/800/500" alt="Image 2">
+    <img src="https://picsum.photos/id/1035/200/150" data-full="https://picsum.photos/id/1035/800/500" alt="Image 3">
+    <img src="https://picsum.photos/id/1045/200/150" data-full="https://picsum.photos/id/1045/800/500" alt="Image 4">
+  </div>
 
-</body>
-</html>
 </body>
 </html>

@@ -7,8 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const myImg = document.getElementById("iFirst");
     const myImg2 = document.getElementById("iSecond");
     const myImg3 = document.getElementById("iThird");
-
-    const allImages = [myImg, myImg2, myImg3];
+    
+    const imageContainer = document.getElementById("image-container");
 
     function scrollToImage(imageElement) {
         if (imageElement) {
@@ -21,28 +21,40 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
     
+    
     if (myBut) {
         myBut.addEventListener('click', () => {
-            scrollToImage(myImg);
+            scrollToImage(document.getElementById("iFirst"));
         });
     }
 
     if (myBut2) {
         myBut2.addEventListener('click', () => {
-            scrollToImage(myImg2);
+            scrollToImage(document.getElementById("iSecond"));
         });
     }
 
     if (myBut3) {
         myBut3.addEventListener('click', () => {
-            scrollToImage(myImg3);
+            scrollToImage(document.getElementById("iThird"));
         });
     }
 
+    
     if (myButRandom) {
         myButRandom.addEventListener('click', () => {
-            const randomIndex = Math.floor(Math.random() * allImages.length);
-            scrollToImage(allImages[randomIndex]);
+            
+            const allImages = Array.from(imageContainer.children);
+
+            for (let i = allImages.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                
+                [allImages[i], allImages[j]] = [allImages[j], allImages[i]];
+            }
+
+            allImages.forEach(image => {
+                imageContainer.appendChild(image);
+            });
         });
     }
 });
