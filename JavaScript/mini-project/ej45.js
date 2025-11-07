@@ -75,20 +75,47 @@ document.addEventListener("DOMContentLoaded", () => {
     myId.textContent = player.id;
     myId.style.display = "none"
 
-    let myBtn = document.createElement("input[type=button]");
-    myBtn.textContent = "Remove";
-    myBtn.className = "button";
+    let changeName = document.createElement("button");
+    changeName.textContent = "Change Name"
+    changeName.className = "changeName";
+
+    let remove = document.createElement("button");
+    remove.textContent = "Remove"
+    remove.className = "remove";
 
     cardContent.appendChild(myName);
     cardContent.appendChild(myPosition);
     cardContent.appendChild(myAge);
     cardContent.appendChild(myPoints);
     cardContent.appendChild(myId);
-    cardContent.appendChild(myBtn);
+    cardContent.appendChild(changeName);
+    cardContent.appendChild(remove);
+
 
     card.appendChild(myImg);
     card.appendChild(cardContent);
 
     container.appendChild(card);
+  });
+
+  let cards = document.querySelectorAll(".card-content");
+  cards.forEach((card) => {
+    let myBtn = card.querySelector("button");
+    let myBtn2 = card.querySelector(".remove");
+    let oldName = card.querySelector(".card-name");
+    myBtn.addEventListener("click", function () {
+      let newName = prompt("Enter a new name: ");
+      oldName.textContent = newName;
+      });
+    myBtn2.addEventListener("click", function () {
+      card.style.display = "none";
+      });
+  });
+  let cardsComplete = document.querySelectorAll(".card");
+  cardsComplete.forEach((card) => {
+    let myBtn = card.querySelector(".remove");
+    myBtn.addEventListener("click", function () {
+      card.style.display = "none";
+      });
   });
 });

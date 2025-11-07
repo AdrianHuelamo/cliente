@@ -1,13 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  function findCard (i){
-    if (i.id === poslist) {
-      let newName = prompt("Enter a name: ");
-      i.name = newName;
-    } else {
-      alert("ERROR");
-    }
-  }
-
   const players = [
     {
       id: 1,
@@ -84,11 +75,17 @@ document.addEventListener("DOMContentLoaded", () => {
     myId.textContent = player.id;
     myId.style.display = "none"
 
+    let changeName = document.createElement("button");
+    changeName.textContent = "Change Name"
+    changeName.className = "changeName";
+
     cardContent.appendChild(myName);
     cardContent.appendChild(myPosition);
     cardContent.appendChild(myAge);
     cardContent.appendChild(myPoints);
     cardContent.appendChild(myId);
+    cardContent.appendChild(changeName);
+
 
     card.appendChild(myImg);
     card.appendChild(cardContent);
@@ -96,9 +93,13 @@ document.addEventListener("DOMContentLoaded", () => {
     container.appendChild(card);
   });
 
-  let mycards = document.querySelectorAll(".card-content");
-  let poslist = parseInt(prompt("Enter a number of the list: "));
-  console.log(mycards[poslist-1]);
-  
-
+  let cards = document.querySelectorAll(".card-content");
+  cards.forEach((card) => {
+    let myBtn = card.querySelector("button");
+    let oldName = card.querySelector(".card-name");
+    myBtn.addEventListener("click", function () {
+      let newName = prompt("Enter a new name: ");
+      oldName.textContent = newName;
+      });
+  });
 });
