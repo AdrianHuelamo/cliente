@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ej57</title>
+    <script defer src="ej57.js"></script>
+</head>
+<body>
+    <p>Ejercicio 57</p>
+    <form action="/submit-page" method="post">
+
+    <h2>User Information Form</h2>
+
+    <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="user_name">
+    </div><br>
+
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="user_password">
+    </div><br>
+
+    <div>
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="user_age">
+    </div><br>
+
+    <div>
+        <legend>Interests:</legend>
+        <input type="checkbox" id="sports" name="interests" value="sports">
+        <label for="sports">Sports</label>
+        
+        <input type="checkbox" id="music" name="interests" value="music">
+        <label for="music">Music</label>
+        
+        <input type="checkbox" id="movies" name="interests" value="movies">
+        <label for="movies">Movies</label>
+    </div><br>
+
+    <div id="gender">
+        <legend>Gender:</legend>
+        <input type="radio" id="male" name="gender" value="male">
+        <label for="male">Male</label>
+        
+        <input type="radio" id="female" name="gender" value="female">
+        <label for="female">Female</label>
+        
+        <input type="radio" id="other" name="gender" value="other">
+        <label for="other">Other</label>
+    </div><br>
+
+    <div>
+        <label for="comments">Comments:</label><br>
+        <textarea id="comments" name="comments" rows="5" cols="40"></textarea>
+    </div>
+
+    <div>
+        <input type="button" value="Submit">
+    </div>
+
+</form>
+</body>
+</html>
