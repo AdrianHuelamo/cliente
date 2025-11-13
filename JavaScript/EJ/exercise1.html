@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        window.onload = function(){
+            var selectedLi = document.querySelector("li.dos");
+            var li4 = document.createElement("li");
+            li4.innerText = "4"
+
+            insertAfter(li4,selectedLi)
+            function insertAfter(newMode, referenceNode){
+                referenceNode.after(newMode);
+            }
+        }
+    </script>
+    <ul>
+        <li class="uno">1</li>
+        <li class="dos">2</li>
+        <li class="tres">3</li>
+    </ul>
+</body>
+</html>

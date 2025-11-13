@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
         optionsI.value = "ireland";
         select.appendChild(optionsI);
 
-
+        select.id = "country"
         divdes.appendChild(select);
 
         let gender = document.getElementById("gender");
@@ -46,25 +46,31 @@ document.addEventListener("DOMContentLoaded", () => {
         let fName = document.getElementById("name").value;
         let fPass = document.getElementById("password").value;
         let fAge = document.getElementById("age").value;
-        let fInterests = document.getElementById("interests").value;
-        let fGender = document.getElementById("gender").value;
+        let fInterestsList = [];
+        let checkedInterests = document.querySelectorAll("input[name='interests']:checked");
+        checkedInterests.forEach(function(checkbox) {
+            fInterestsList.push(checkbox.value);
+        });
+        let fInterests = fInterestsList.join(', ');
+        let genderChecked = document.querySelector("input[name='gender']:checked");
+        let fGender = genderChecked ? genderChecked.value : "No seleccionado";
         let fCountry = document.getElementById("country").value;
         let fComments = document.getElementById("comments").value;
 
-        formName.textContent = fName;
-        formPass.textContent = fPass;
-        formAge.textContent = fAge;
-        formInterests.textContent = fInterests;
-        formGender.textContent = fGender;
-        formCountry.textContent = fCountry;
-        formComments.textContent = fComments;
+        formName.textContent = "Name: " + fName;
+        formPass.textContent = "Password: " + fPass;
+        formAge.textContent = "Age: " + fAge;
+        formInterests.textContent = "Interests: " + fInterests;
+        formGender.textContent = "Gender: " + fGender;
+        formCountry.textContent = "Country: " + fCountry;
+        formComments.textContent = "Comments: " + fComments;
 
-        document.appendChild(formName);
-        document.appendChild(formPass);
-        document.appendChild(formAge);
-        document.appendChild(formInterests);
-        document.appendChild(formGender);
-        document.appendChild(formCountry);
-        document.appendChild(formComments);
+        document.body.appendChild(formName);
+        document.body.appendChild(formPass);
+        document.body.appendChild(formAge);
+        document.body.appendChild(formInterests);
+        document.body.appendChild(formGender);
+        document.body.appendChild(formCountry);
+        document.body.appendChild(formComments);
     });
 });

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise 2</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        select,
+        input {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        window.onload = function(){
+            var arrayofeliminated = new Set();
+            var select = document.querySelector("select#seasonsDropdown");
+            
+            var checkboxs = document.querySelectorAll("input[type='checkbox']");
+            
+            for(checkbox of checkboxs){
+                checkbox.onchange = function(){
+                    refreshSelect(checkboxs);
+                }
+            }
+
+            function refreshSelect(checkboxs){
+                for(checkbox of checkboxs){
+                    if(!checkbox.checked){
+                        //document.write(checkbox.id);
+                        arrayofeliminated.add(checkbox.id);
+                        
+                    }else{
+                        if(arrayofeliminated.has(checkbox.id)){
+                            var option = document.createElement("option");
+                            option.value = checkbox.id;
+                            option.innerText = checkbox.id;
+                            select.appendChild(option);
+                            arrayofeliminated.delete(checkbox.id);
+                        }
+                    }
+                }
+                var options = select.querySelectorAll("option");
+                for(option of options){
+                    if(arrayofeliminated.has(option.value)){
+                        option.remove();
+                    }
+                }
+            }
+        }
+    </script>
+
+    <h2>Choose Seasons</h2>
+
+    <select id="seasonsDropdown">
+        <option value="winter">winter</option>
+        <option value="spring">spring</option>
+        <option value="summer">summer</option>
+        <option value="fall">fall</option>
+    </select>
+
+    <div>
+        <input type="checkbox" id="winter" checked>
+        <label for="winter">Winter</label>
+
+        <input type="checkbox" id="spring" checked>
+        <label for="spring">Spring</label>
+
+        <input type="checkbox" id="summer" checked>
+        <label for="summer">Summer</label>
+
+        <input type="checkbox" id="fall" checked>
+        <label for="fall">Fall</label>
+    </div>
+
+</body>
+
+</html>

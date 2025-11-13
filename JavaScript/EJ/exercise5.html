@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Exercise 5</title>
+    <style>
+        /* General styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            background-color: #f5f5f5;
+        }
+
+        #main-container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        /* Sidebar styles */
+        #sidebar {
+            width: 300px;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+        }
+
+        #sidebar h2 {
+            margin-top: 0;
+            font-size: 22px;
+            border-bottom: 2px solid #555;
+            padding-bottom: 10px;
+        }
+
+        /* Right container (cards) */
+        #container {
+            flex: 1;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        /* Card styles */
+        .card {
+            width: 250px;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.2s ease-in-out;
+            float: left;
+            margin: 0px 10px 20px 10px;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card-buttons {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 15px;
+            background-color: #f9f9f9;
+            border-top: 1px solid #ddd;
+        }
+
+        .card-buttons button {
+            background-color: #cbcbcb;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .card-buttons button:hover {
+            background-color: #888888;
+        }
+
+        /* Form styles */
+        #form-container {
+            margin: 20px 0px;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        window.onload = function(){
+            var cardcontainer = document.querySelector("#card-container"); 
+            cars = [
+                { id: 432, image: "toyota-corolla-2018.jpg", brand: "Toyota", model: "Corolla", year: 2018, fuelType: "Gasoline", price: 15000 },
+                { id: 123, image: "honda-civic-2020.jpg", brand: "Honda", model: "Civic", year: 2020, fuelType: "Gasoline", price: 18000 },
+                { id: 874, image: "tesla-model-3-2022.jpg", brand: "Tesla", model: "Model 3", year: 2022, fuelType: "Electric", price: 40000 },
+                { id: 982, image: "ford-focus-2017.jpg", brand: "Ford", model: "Focus", year: 2017, fuelType: "Diesel", price: 12000 },
+                { id: 569, image: "bmw-3-series-2019.jpg", brand: "BMW", model: "3 Series", year: 2019, fuelType: "Gasoline", price: 25000 },
+                { id: 215, image: "audi-a4-2016.jpg", brand: "Audi", model: "A4", year: 2016, fuelType: "Gasoline", price: 22000 },
+                { id: 745, image: "hyundai-elantra-2021.jpg", brand: "Hyundai", model: "Elantra", year: 2021, fuelType: "Gasoline", price: 16000 },
+                { id: 387, image: "toyota-camry-2015.jpg", brand: "Toyota", model: "Camry", year: 2015, fuelType: "Gasoline", price: 14000 },
+                { id: 498, image: "honda-accord-2019.jpg", brand: "Honda", model: "Accord", year: 2019, fuelType: "Hybrid", price: 21000 },
+                { id: 234, image: "chevrolet-malibu-2018.jpg", brand: "Chevrolet", model: "Malibu", year: 2018, fuelType: "Gasoline", price: 17000 },
+                { id: 893, image: "tesla-model-s-2021.jpg", brand: "Tesla", model: "Model S", year: 2021, fuelType: "Electric", price: 80000 },
+                { id: 341, image: "ford-mustang-2015.jpg", brand: "Ford", model: "Mustang", year: 2015, fuelType: "Gasoline", price: 30000 },
+                { id: 777, image: "volkswagen-golf-2020.jpg", brand: "Volkswagen", model: "Golf", year: 2020, fuelType: "Diesel", price: 19000 },
+                { id: 115, image: "nissan-altima-2021.jpg", brand: "Nissan", model: "Altima", year: 2021, fuelType: "Gasoline", price: 20000 },
+                { id: 601, image: "kia-optima-2019.jpg", brand: "Kia", model: "Optima", year: 2019, fuelType: "Gasoline", price: 18000 },
+                { id: 492, image: "hyundai-sonata-2018.jpg", brand: "Hyundai", model: "Sonata", year: 2018, fuelType: "Hybrid", price: 19500 },
+                { id: 356, image: "chevrolet-impala-2017.jpg", brand: "Chevrolet", model: "Impala", year: 2017, fuelType: "Gasoline", price: 22000 },
+                { id: 664, image: "bmw-x5-2020.jpg", brand: "BMW", model: "X5", year: 2020, fuelType: "Diesel", price: 50000 },
+                { id: 842, image: "mercedes-c-class-2019.jpg", brand: "Mercedes", model: "C-Class", year: 2019, fuelType: "Gasoline", price: 35000 },
+                { id: 923, image: "audi-q5-2022.jpg", brand: "Audi", model: "Q5", year: 2022, fuelType: "Hybrid", price: 45000 },
+            ];
+            var formfilter = document.querySelector("form[name='filter']");
+            var resetfilters = formfilter.querySelector("input[name='resetfilters']");
+            var modeltext = formfilter.querySelector("input[name='model']");
+            var checksfueltype = formfilter.querySelectorAll("input[type='checkbox']");
+
+            var formedit = document.querySelector("form[name='edit']");
+            var saveedit = formedit.querySelector("input[name='saveedit']");
+            var canceledit = formedit.querySelector("input[name='canceledit']");
+            
+            var idedited = formedit.querySelector("input[name='id']");
+
+            var modeledit = formedit.querySelector("input[name='modeledit']");
+            var yearedit = formedit.querySelector("input[name='yearedit']");
+            var priceedit = formedit.querySelector("input[name='priceedit']");
+            var brandedit = formedit.querySelector("select[name='brandedit']");
+            var fueledit = formedit.querySelector("select[name='fueledit']");
+
+            function editCar(idedit, indexedit){
+                console.log(brandedit.value);
+                idedited.value = idedit;
+                brandedit.value = cars[indexedit].brand;
+                modeledit.value = cars[indexedit].model;
+                yearedit.value = cars[indexedit].year;
+                priceedit.value = cars[indexedit].price;
+                fueledit.value = cars[indexedit].fuelType;
+                console.log(fueledit.value); 
+            }
+            saveedit.onclick = function(event){
+                event.preventDefault();
+                idedit = idedited.value;
+                console.log(idedit);
+                var index = cars.findIndex((current)=>{
+                    return current.id == idedit;
+                });
+                console.log(index);
+                cars[index].brand = brandedit.value;
+                cars[index].model = modeledit.value;
+                cars[index].year = yearedit.value;
+                cars[index].price = priceedit.value;
+                cars[index].fuelType = fueledit.value;
+                refresh();
+            }
+            canceledit.onclick = function(event){
+                    event.preventDefault();
+                    brandedit.value =  "Toyota";
+                    modeledit.value = "";
+                    yearedit.value = "";
+                    priceedit.value = "";
+                    fueledit.value = "Gasoline";
+                }
+            function drawAllCars(listOfCars){
+                var card = Array();
+                for(let [i,car] of listOfCars.entries()){
+                    card[i] = document.createElement("div");
+                    card[i].classList.add("card");
+                    
+
+                    var h3 = document.createElement("h3");
+                    var img = document.createElement("img");
+                    var p1 = document.createElement("p");
+                    var p2 = document.createElement("p");
+                    var p3 = document.createElement("p");
+
+                    var button1 = document.createElement("button");
+                    var button2 = document.createElement("button");
+
+
+                    h3.innerText = car.brand+" "+car.model;
+                    img.src = "img/"+car.image;
+                    p1.innerHTML = "<strong>Year: </strong>"+car.year;
+                    p2.innerHTML = "<strong>Fuel Type: </strong>"+car.fuelType;
+                    p3.innerHTML = "<strong>Price: </strong>"+car.price;
+
+                    button1.innerText = "Edit";
+                    button2.innerText = "Remove";
+                    
+                    card[i].appendChild(img);
+                    card[i].appendChild(h3);
+                    card[i].appendChild(p1);
+                    card[i].appendChild(p2);
+                    card[i].appendChild(p3);
+
+                    card[i].appendChild(button1);
+                    card[i].appendChild(button2);
+
+                    button1.onclick = function(){
+                        var index = cars.findIndex((current)=>{
+                            return current.id == car.id
+                        });
+                        editCar(car.id,index);
+                    }
+                    button2.onclick = function(){
+                        var index = cars.findIndex((current)=>{
+                            return current.id == car.id
+                        });
+                        cars.splice(index,1);
+                        refresh();
+                        console.log(cars);
+                    }
+
+                    cardcontainer.appendChild(card[i]);
+                }
+            }
+
+            drawAllCars(cars);
+            string = "adasd";
+            
+            function filterByModel(listOfCars){
+                console.log(modeltext.value);
+                var listOfCars = listOfCars.filter((current)=>{
+                    var curlow = current.model.toLowerCase();
+                    return curlow.includes(""+modeltext.value.toLowerCase());
+                    
+                });
+                return listOfCars;
+            }
+            function filterByFuelType(listOfCars){
+                var arrayofcheckeds = new Set();
+                for(check of checksfueltype){
+                    if(check.checked){
+                        arrayofcheckeds.add(check.name);
+                    }
+                } 
+                if(arrayofcheckeds.size==0){
+                    return listOfCars;
+                }
+                var listOfCars = listOfCars.filter((current)=>{
+                    for(checked of arrayofcheckeds){
+                        if(checked == current.fuelType){
+                            return current;
+                        }
+                    }
+                    
+                });
+                return listOfCars;
+            }
+
+            function refresh(){
+                var listOfCars = filterByModel(cars);
+                var listOfCars = filterByFuelType(listOfCars);
+                clearcontainer();
+                drawAllCars(listOfCars);
+            }
+            function clearcontainer(){
+                cardcontainer.innerHTML= "";
+            }
+            
+
+            modeltext.onkeyup = function(){
+                refresh();
+            }
+            for(check of checksfueltype){
+                check.onchange = function(){
+                    refresh();
+                }
+            }
+            
+            resetfilters.onclick = function(event){
+                event.preventDefault();
+                modeltext.value ="";
+                for(check of checksfueltype){
+                    check.checked = false;
+                }
+                refresh();
+            }
+
+        }
+    </script>
+    <div id="main-container">
+        <aside id="sidebar">
+            <div id="filters">
+                <h2>Filter Options</h2>
+                <form action="" name="filter">
+                    Model: <br>
+                    <input type="text" name="model" /> <br>
+                    <br>
+                    Fuel Type: <br>
+                    <input type="checkbox" name="Gasoline" />Gasoline <br>
+                    <input type="checkbox" name="Diesel" />Diesel <br>
+                    <input type="checkbox" name="Electric" />Electric <br>
+                    <input type="checkbox" name="Hybrid" />Hybrid <br>
+                    <input type="submit" value="Reset Filters" name="resetfilters">
+                </form>
+            </div>
+            <div id="form-container">
+                <h2>Edit form</h2>
+                <form action="" name="edit">
+                    <input type="hidden" name="id" id=""><br>
+                    Brand: <br>
+                    <select name="brandedit" id="">
+                        <option value="Toyota">Toyota</option>
+                        <option value="Honda">Honda</option>
+                        <option value="Tesla">Tesla</option>
+                        <option value="Ford">Ford</option>
+                        <option value="BMW">BMW</option>
+                        <option value="Audi">Audi</option>
+                        <option value="Hyundai">Hyundai</option>
+                        <option value="Chevrolet">Chevrolet</option>
+                        <option value="Volkswagen">Volkswagen</option>
+                        <option value="Nissan">Nissan</option>
+                        <option value="Kia">Kia</option>
+                        <option value="Mercedes">Mercedes</option>
+                    </select><br>
+                    Model: <br>
+                    <input type="text" name="modeledit" id=""><br>
+                    Year: <br>
+                    <input type="text" name="yearedit" id=""><br>
+                    Fuel Type: <br>
+                    <select name="fueledit" id="">
+                        <option value="Gasoline">Gasoline</option>
+                        <option value="Diesel">Diesel</option>
+                        <option value="Electric">Electric</option>
+                        <option value="Hybrid">Hybrid</option>
+                    </select><br>
+                    Price: <br>
+                    <input type="text" name="priceedit" id=""><br>
+                    <input type="submit" value="Save" name="saveedit">
+                    <input type="submit" value="Cancel" name="canceledit">
+                </form>
+            </div>
+        </aside>
+
+        <div id="container">
+            <h1>Car Inventory</h1>
+            <div id="sorting-options">
+                <h3>Sort Options</h3>
+                <!-- Add the HTML form here to edit or add cars -->
+            </div>
+
+            <div id="card-container" class="card-container">
+                <!-- Add dynamically your cards using JavaScript -->
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        p.limpiar{clear:both}
+    </style>
+</head>
+<body>
+    <script>
+        window.onload = function(){
+            var form = document.querySelector("form");
+            var submit = form.querySelector("input[type='submit']");
+            
+            var emails = form.querySelectorAll("input[type='text']");
+            var span = document.querySelector("span");
+
+            var email1 = emails[0];
+            var email2 = emails[1];
+
+            submit.disabled = true;
+            
+            email2.onkeyup = function(){
+                if(email1.value == email2.value){
+                    span.innerText = "";
+                    span.style.color = "black";
+                    submit.disabled = false;
+                }else if(email1.value != email2.value){
+                    span.innerText = "Emails do not match";
+                    span.style.color = "red";
+                    submit.disabled = true;
+                }
+            }
+
+        }
+    </script>
+    <form action="">
+        Email: <input type="text" name="email1" /><br/>
+        Confirm Email: <input type="text" name="email2" /><br>
+        <p class="limpiar"></p>
+        <span></span><br>
+        <input type="submit" value="Submit" name ="submit" />
+    </form>
+</body>
+</html>
