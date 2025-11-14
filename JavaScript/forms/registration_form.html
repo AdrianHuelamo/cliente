@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form validation</title>
+    <style type="text/css">
+        body {
+            font-family: 'Trebuchet MS', Arial, sans-serif;
+        }
+        form {
+            width: 600px;
+            margin: 20px auto 0 auto;
+        }
+        label {
+            float: left;
+            width: 200px;
+            font-weight: bold;
+        }
+        label[for="register_terms"] {
+            float: none;
+        }
+        input[type="text"],
+        input[type="password"],
+        textarea {
+            width: 360px;
+        }
+        input[type="checkbox"] {
+            margin-left: 200px;
+        }
+        input[type="submit"] {
+            margin: 20px 0 0 200px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <form action="#" method="POST" id="register">
+        <fieldset>
+            <legend>Register</legend>
+            <label for="register_name">Name:</label><input type="text" name="name" id="register_name">
+            <label for="register_surname">Surname:</label><input type="text" name="surname" id="register_surname">
+            <label for="register_email">Email:</label><input type="text" name="email" id="register_email">
+            <label for="register_password">Password:</label><input type="password" name="password" id="register_password">
+            <label for="register_comments">Comments:</label><textarea name="comments" id="register_comments" rows="10"></textarea>
+            <input type="checkbox" name="terms" id="register_terms" value="1"><label for="register_terms">I accept the terms of service.</label>
+            <input type="submit" value="Submit">
+        </fieldset>
+    </form>
+</body>
+</html>
