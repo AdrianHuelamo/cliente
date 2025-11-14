@@ -1,121 +1,160 @@
 document.addEventListener("DOMContentLoaded", () => {
   const players = [
     {
-      id: 1,
-      image: "https://cdn.nba.com/headshots/nba/latest/1040x760/2544.png",
-      name: "LeBron James",
-      position: "SF",
-      age: 38,
-      pointsPerGame: 28.9,
+      id: 24,
+      image: "matt_costello.jpg",
+      name: "Matt Costello",
+      position: "Center/Forward",
+      age: 31,
+      pointsPerGame: 12.3,
     },
     {
-      id: 2,
-      image: "https://cdn.nba.com/headshots/nba/latest/1040x760/201939.png",
-      name: "Stephen Curry",
-      position: "PG",
-      age: 35,
-      pointsPerGame: 29.4,
-    },
-    {
-      id: 3,
-      image: "https://cdn.nba.com/headshots/nba/latest/1040x760/203507.png",
-      name: "Giannis Antetokounmpo",
-      position: "PF",
-      age: 28,
-      pointsPerGame: 31.1,
-    },
-    {
-      id: 4,
-      image: "https://cdn.nba.com/headshots/nba/latest/1040x760/1629029.png",
-      name: "Luka Doncic",
-      position: "PG",
-      age: 24,
-      pointsPerGame: 32.4,
+      id: 0,
+      image: "brancou_badio.jpg",
+      name: "Brancou Badio",
+      position: "Guard",
+      age: 25,
+      pointsPerGame: 9.1,
     },
     {
       id: 5,
-      image: "https://cdn.nba.com/headshots/nba/latest/1040x760/1628369.png",
-      name: "Jayson Tatum",
-      position: "SF",
-      age: 25,
-      pointsPerGame: 30.1,
+      image: "sergio_de_larrea.jpg",
+      name: "Sergio de Larrea",
+      position: "Guard",
+      age: 19,
+      pointsPerGame: 10.8,
+    },
+    {
+      id: 8,
+      image: "jean_montero.jpg",
+      name: "Jean Montero",
+      position: "Guard",
+      age: 21,
+      pointsPerGame: 11.5,
+    },
+    {
+      id: 4,
+      image: "jaime_pradilla.jpg",
+      name: "Jaime Pradilla",
+      position: "Forward/Center",
+      age: 23,
+      pointsPerGame: 8.9,
     },
   ];
 
-  let container = document.getElementById("playersContainer");
+  let body = document.querySelector("body");
 
-  players.forEach(player => {
-    let card = document.createElement("div");
-    card.className = "card";
+  let container = document.createElement("div");
+  container.className = "container";
 
-    let myImg = document.createElement("img");
-    myImg.src = player.image;
-    myImg.className = "card-image";
+  body.appendChild(container);
 
-    let cardContent = document.createElement("div");
-    cardContent.className = "card-content";
+  function cleanContainer() {
+    container.innerHTML = "";
+  }
 
-    let myName = document.createElement("h2");
-    myName.textContent = player.name;
-    myName.className = "card-name";
+  function deletePlayer(players, id) {
+    let playerIndex = players.findIndex((player) => player.id == id);
+    players.splice(playerIndex, 1);
+  }
 
-    let myPosition = document.createElement("p");
-    myPosition.textContent = `Position: ${player.position}`;
-    myPosition.className = "info-item";
+  function drawPlayer(player) {
+    let myCard = document.querySelector("template").content.cloneNode(true);
+    let card = myCard.querySelector("div");
+    card.id = player.id;
+    let img = myCard.querySelector("img");
+    img.src = "ejer40imgs/" + player.image;
+    let name = myCard.querySelector("h2");
+    name.innerText = player.name;
+    let p = myCard.querySelectorAll("p");
+    let p1 = p[0];
+    let p2 = p[1];
+    let p3 = p[2];
+    p1.innerText += player.position;
+    p2.innerText += player.age + " years";
+    p3.innerText += player.pointsPerGame + " points per game";
+    let rmBtn = myCard.querySelector(".but");
+    let edBtn = myCard.querySelector(".edt");
 
-    let myAge = document.createElement("p");
-    myAge.textContent = `Age: ${player.age}`;
-    myAge.className = "info-item";
+    container.appendChild(myCard);
+    rmBtn.addEventListener("click", () => {
+      let playerID = rmBtn.parentElement.id;
+      deletePlayer(players, playerID);
+      cleanContainer();
+      drawAllPlayers(players);
+    });
 
-    let myPoints = document.createElement("p");
-    myPoints.textContent = `PPG: ${player.pointsPerGame}`;
-    myPoints.className = "info-item";
-
-    let myId = document.createElement("p");
-    myId.textContent = player.id;
-    myId.style.display = "none"
-
-    let changeName = document.createElement("button");
-    changeName.textContent = "Change Name"
-    changeName.className = "changeName";
-
-    let remove = document.createElement("button");
-    remove.textContent = "Remove"
-    remove.className = "remove";
-
-    cardContent.appendChild(myName);
-    cardContent.appendChild(myPosition);
-    cardContent.appendChild(myAge);
-    cardContent.appendChild(myPoints);
-    cardContent.appendChild(myId);
-    cardContent.appendChild(changeName);
-    cardContent.appendChild(remove);
+    edBtn.addEventListener("click", () => {
+      let playerID = edBtn.parentElement.id;
+      let player = players.find((player) => player.id == playerID);
+      document.getElementsByName("pname")[0].value = player.name;
+      player.name = "Jose Socuellamos"
 
 
-    card.appendChild(myImg);
-    card.appendChild(cardContent);
+      console.log(player);
+      
+      cleanContainer();
+      drawAllPlayers(players);
+    });
+  }
 
-    container.appendChild(card);
-  });
+  function drawAllPlayers(players) {
+    for (const player of players) {
+      drawPlayer(player);
+    }
+  }
 
-  let cards = document.querySelectorAll(".card-content");
-  cards.forEach((card) => {
-    let myBtn = card.querySelector("button");
-    let myBtn2 = card.querySelector(".remove");
-    let oldName = card.querySelector(".card-name");
-    myBtn.addEventListener("click", function () {
-      let newName = prompt("Enter a new name: ");
-      oldName.textContent = newName;
-      });
-    myBtn2.addEventListener("click", function () {
-      card.style.display = "none";
-      });
-  });
-  let cardsComplete = document.querySelectorAll(".card");
-  cardsComplete.forEach((card) => {
-    let myBtn = card.querySelector(".remove");
-    myBtn.addEventListener("click", function () {
-      card.style.display = "none";
-      });
+  drawAllPlayers(players);
+
+  // let myPlayerName = prompt(
+  //   "Enter the jersey number of the player you want to rename: "
+  // );
+  // let newName = prompt("Enter the new name of the player: ");
+  // let playerIndex = players.findIndex((player) => player.name == myPlayerName);
+  // players[playerIndex].name = newName;
+  // cleanContainer();
+  // drawAllPlayers(players);
+
+  let addPlayerBtn = document.querySelector("#showForm");
+
+  let formDiv = document.querySelector("#newPlayerForm");
+
+  addPlayerBtn.addEventListener("click", function () {
+    if (addPlayerBtn.textContent == "Show Form") {
+      formDiv.style.display = "block";
+      addPlayerBtn.textContent = "Hide Form";
+    } else {
+      formDiv.style.display = "none";
+      addPlayerBtn.textContent = "Show Form";
+    }
+
+    let submitBtn = document.querySelector("#submitForm");
+    submitBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      let idInput = document.getElementsByName("pid")[0].value;
+      let nameInput = document.getElementsByName("pname")[0].value;
+      let surnameInput = document.getElementsByName("psurname")[0].value;
+      let posInput = document.getElementsByName("position")[0].value;
+      let ageInput = document.getElementsByName("age")[0].value;
+      let ppgInput = document.getElementsByName("ppg")[0].value;
+
+      console.log(idInput);
+
+      let newPlayer = {
+        id: idInput,
+        image: "default.jpg",
+        name: nameInput + " " + surnameInput,
+        position: posInput,
+        age: ageInput,
+        pointsPerGame: ppgInput,
+      };
+
+      players.push(newPlayer);
+      document.querySelector("form").reset();
+      formDiv.style.display = "none";
+      addPlayerBtn.innerText = "Show Form";
+      cleanContainer();
+      drawAllPlayers(players);
+    });
   });
 });
