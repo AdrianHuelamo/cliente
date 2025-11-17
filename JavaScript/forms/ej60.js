@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     inputField.addEventListener('keydown', function(event) {
         const key = event.key;
-        if (forbidden.includes(key)) {
+        if (forbidden.includes(key.toLocaleLowerCase())) {
             event.preventDefault(); 
             warningDiv.textContent = `The letter "${key}" is not allowed on this page`;   
             warningDiv.style.display = 'block';
