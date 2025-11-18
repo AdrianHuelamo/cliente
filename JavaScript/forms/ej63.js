@@ -1,160 +1,177 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const players = [
-    {
-      id: 24,
-      image: "matt_costello.jpg",
-      name: "Matt Costello",
-      position: "Center/Forward",
-      age: 31,
-      pointsPerGame: 12.3,
-    },
-    {
-      id: 0,
-      image: "brancou_badio.jpg",
-      name: "Brancou Badio",
-      position: "Guard",
-      age: 25,
-      pointsPerGame: 9.1,
-    },
-    {
-      id: 5,
-      image: "sergio_de_larrea.jpg",
-      name: "Sergio de Larrea",
-      position: "Guard",
-      age: 19,
-      pointsPerGame: 10.8,
-    },
-    {
-      id: 8,
-      image: "jean_montero.jpg",
-      name: "Jean Montero",
-      position: "Guard",
-      age: 21,
-      pointsPerGame: 11.5,
-    },
-    {
-      id: 4,
-      image: "jaime_pradilla.jpg",
-      name: "Jaime Pradilla",
-      position: "Forward/Center",
-      age: 23,
-      pointsPerGame: 8.9,
-    },
-  ];
+    const players = [
+        { id: 1, image: "https://cdn.nba.com/headshots/nba/latest/1040x760/2544.png", name: "LeBron James", position: "SF", age: 38, pointsPerGame: 28.9 },
+        { id: 2, image: "https://cdn.nba.com/headshots/nba/latest/1040x760/201939.png", name: "Stephen Curry", position: "PG", age: 35, pointsPerGame: 29.4 },
+        { id: 3, image: "https://cdn.nba.com/headshots/nba/latest/1040x760/203507.png", name: "Giannis Antetokounmpo", position: "PF", age: 28, pointsPerGame: 31.1 },
+        { id: 4, image: "https://cdn.nba.com/headshots/nba/latest/1040x760/1629029.png", name: "Luka Doncic", position: "PG", age: 24, pointsPerGame: 32.4 },
+        { id: 5, image: "https://cdn.nba.com/headshots/nba/latest/1040x760/1628369.png", name: "Jayson Tatum", position: "SF", age: 25, pointsPerGame: 30.1 },
+    ];
 
-  let body = document.querySelector("body");
+    let container = document.getElementById("playersContainer");
+    let show = document.querySelector("#show");
+    let form = document.getElementById("form");
 
-  let container = document.createElement("div");
-  container.className = "container";
+    let fid = document.getElementById("idNumber");
+    let fname = document.getElementById("Name");
+    let fsurname = document.getElementById("Surname");
+    let fposition = document.getElementById("position");
+    let fbirth = document.getElementById("dateOfBirthday");
+    let fppg = document.getElementById("PPG");
 
-  body.appendChild(container);
+    let editingId = null;
 
-  function cleanContainer() {
-    container.innerHTML = "";
-  }
+    function createPlayerCard(player) {
+        let card = document.createElement("div");
+        card.className = "card";
 
-  function deletePlayer(players, id) {
-    let playerIndex = players.findIndex((player) => player.id == id);
-    players.splice(playerIndex, 1);
-  }
+        let myImg = document.createElement("img");
+        myImg.src = player.image || "https://cdn.nba.com/headshots/nba/latest/1040x760/fallback.png";
+        myImg.className = "card-image";
+        myImg.onerror = function() { this.src = "https://via.placeholder.com/300x300?text=No+Image"; };
 
-  function drawPlayer(player) {
-    let myCard = document.querySelector("template").content.cloneNode(true);
-    let card = myCard.querySelector("div");
-    card.id = player.id;
-    let img = myCard.querySelector("img");
-    img.src = "ejer40imgs/" + player.image;
-    let name = myCard.querySelector("h2");
-    name.innerText = player.name;
-    let p = myCard.querySelectorAll("p");
-    let p1 = p[0];
-    let p2 = p[1];
-    let p3 = p[2];
-    p1.innerText += player.position;
-    p2.innerText += player.age + " years";
-    p3.innerText += player.pointsPerGame + " points per game";
-    let rmBtn = myCard.querySelector(".but");
-    let edBtn = myCard.querySelector(".edt");
+        let cardContent = document.createElement("div");
+        cardContent.className = "card-content";
 
-    container.appendChild(myCard);
-    rmBtn.addEventListener("click", () => {
-      let playerID = rmBtn.parentElement.id;
-      deletePlayer(players, playerID);
-      cleanContainer();
-      drawAllPlayers(players);
-    });
+        let myName = document.createElement("h2");
+        myName.textContent = player.name;
+        myName.className = "card-name";
 
-    edBtn.addEventListener("click", () => {
-      let playerID = edBtn.parentElement.id;
-      let player = players.find((player) => player.id == playerID);
-      document.getElementsByName("pname")[0].value = player.name;
-      player.name = "Jose Socuellamos"
+        let myPosition = document.createElement("p");
+        myPosition.textContent = `Position: ${player.position}`;
+        myPosition.className = "info-item";
 
+        let myAge = document.createElement("p");
+        myAge.textContent = `Age: ${player.age}`;
+        myAge.className = "info-item";
 
-      console.log(player);
-      
-      cleanContainer();
-      drawAllPlayers(players);
-    });
-  }
+        let myPoints = document.createElement("p");
+        myPoints.textContent = `PPG: ${player.pointsPerGame}`;
+        myPoints.className = "info-item";
 
-  function drawAllPlayers(players) {
-    for (const player of players) {
-      drawPlayer(player);
-    }
-  }
+        let edit = document.createElement("button");
+        edit.textContent = "Edit";
+        edit.className = "changeName";
 
-  drawAllPlayers(players);
+        let remove = document.createElement("button");
+        remove.textContent = "Remove";
+        remove.className = "remove";
 
-  // let myPlayerName = prompt(
-  //   "Enter the jersey number of the player you want to rename: "
-  // );
-  // let newName = prompt("Enter the new name of the player: ");
-  // let playerIndex = players.findIndex((player) => player.name == myPlayerName);
-  // players[playerIndex].name = newName;
-  // cleanContainer();
-  // drawAllPlayers(players);
+        edit.addEventListener("click", function () {
+            form.style.display = "grid";
+            document.querySelector("legend").textContent = "Edit Player";
+            document.querySelector('input[type="submit"]').value = "Save Player";
+            fid.style.display = "none";
+            document.querySelector('label[for="idNumber"]').style.display = "none";
 
-  let addPlayerBtn = document.querySelector("#showForm");
+            editingId = player.id;
 
-  let formDiv = document.querySelector("#newPlayerForm");
+            let names = player.name.split(" ");
+            fname.value = names[0];
+            fsurname.value = names.slice(1).join(" ");
+            fposition.value = player.position;
+            fppg.value = player.pointsPerGame;
 
-  addPlayerBtn.addEventListener("click", function () {
-    if (addPlayerBtn.textContent == "Show Form") {
-      formDiv.style.display = "block";
-      addPlayerBtn.textContent = "Hide Form";
-    } else {
-      formDiv.style.display = "none";
-      addPlayerBtn.textContent = "Show Form";
+            form.scrollIntoView({behavior: "smooth"});
+        });
+
+        remove.addEventListener("click", function () {
+            let index = players.findIndex(p => p.id === player.id);
+            if (index > -1) players.splice(index, 1);
+            card.remove();
+        });
+
+        cardContent.appendChild(myName);
+        cardContent.appendChild(myPosition);
+        cardContent.appendChild(myAge);
+        cardContent.appendChild(myPoints);
+        cardContent.appendChild(edit);
+        cardContent.appendChild(remove);
+
+        card.appendChild(myImg);
+        card.appendChild(cardContent);
+
+        container.appendChild(card);
     }
 
-    let submitBtn = document.querySelector("#submitForm");
-    submitBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      let idInput = document.getElementsByName("pid")[0].value;
-      let nameInput = document.getElementsByName("pname")[0].value;
-      let surnameInput = document.getElementsByName("psurname")[0].value;
-      let posInput = document.getElementsByName("position")[0].value;
-      let ageInput = document.getElementsByName("age")[0].value;
-      let ppgInput = document.getElementsByName("ppg")[0].value;
-
-      console.log(idInput);
-
-      let newPlayer = {
-        id: idInput,
-        image: "default.jpg",
-        name: nameInput + " " + surnameInput,
-        position: posInput,
-        age: ageInput,
-        pointsPerGame: ppgInput,
-      };
-
-      players.push(newPlayer);
-      document.querySelector("form").reset();
-      formDiv.style.display = "none";
-      addPlayerBtn.innerText = "Show Form";
-      cleanContainer();
-      drawAllPlayers(players);
+    players.forEach(player => {
+        createPlayerCard(player);
     });
-  });
+
+    show.addEventListener("click", () => {
+        if (form.style.display === "none" || form.style.display === "") {
+            form.style.display = "grid";
+            show.textContent = "Hide Form";
+            editingId = null;
+            form.reset();
+            document.querySelector("legend").textContent = "Add Player";
+            document.querySelector('input[type="submit"]').value = "Add Player";
+            fid.style.display = "block";
+            document.querySelector('label[for="idNumber"]').style.display = "block";
+        } else {
+            form.style.display = "none";
+            show.textContent = "Show Form";
+        }
+    });
+
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        let vid = fid.value;
+        let vname = fname.value;
+        let vsurname = fsurname.value;
+        let vposition = fposition.value;
+        let vbirth = fbirth.value;
+        let vppg = fppg.value;
+
+        if (vname === "" || vsurname === "" || vppg === "") {
+            alert("Please fill correctly all fields");
+            return;
+        }
+
+        let ageCalculated = "N/A";
+        if(vbirth) {
+            let birthDate = new Date(vbirth);
+            let today = new Date();
+            let age = today.getFullYear() - birthDate.getFullYear();
+            let m = today.getMonth() - birthDate.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            ageCalculated = age;
+        }
+
+        if (editingId !== null) {
+            let playerToUpdate = players.find(p => p.id === editingId);
+            if (playerToUpdate) {
+                playerToUpdate.name = `${vname} ${vsurname}`;
+                playerToUpdate.position = vposition;
+                playerToUpdate.pointsPerGame = vppg;
+                if (ageCalculated !== "N/A") {
+                    playerToUpdate.age = ageCalculated;
+                }
+            }
+            container.innerHTML = "";
+            players.forEach(p => createPlayerCard(p));
+        } else {
+            let newPlayer = {
+                id: vid || Date.now(),
+                image: "",
+                name: `${vname} ${vsurname}`,
+                position: vposition,
+                age: ageCalculated,
+                pointsPerGame: vppg
+            };
+            players.push(newPlayer);
+            createPlayerCard(newPlayer);
+        }
+
+        form.reset();
+        form.style.display = "none";
+        show.textContent = "Show Form";
+        editingId = null;
+        fid.style.display = "block";
+        document.querySelector('label[for="idNumber"]').style.display = "block";
+        document.querySelector("legend").textContent = "Add Player";
+        document.querySelector('input[type="submit"]').value = "Add Player";
+    });
 });
