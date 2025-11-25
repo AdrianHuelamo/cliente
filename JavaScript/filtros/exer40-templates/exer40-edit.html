@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html class="no-js">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="exer40-edit.css">
+    <script src="exer40-edit.js"></script>
+</head>
+
+<body>
+    <div id="header">
+        <h1>TEAM MANAGEMENT</h1>
+    </div>
+    <div id="editPlayerForm">
+        EDIT PLAYER
+        <form action="#" method="post">
+            <label for="pname">Name: </label>
+            <input type="text" name="pname" placeholder="Name"><br>
+            <label for="psurname">Surname: </label>
+            <input type="text" name="psurname" placeholder="Surname"><br>
+            <label for="position">Position: </label>
+            <select name="position">
+                <option value="choose">Choose Position</option>
+                <option value="Center">Center</option>
+                <option value="Center/Forward">Center/Forward</option>
+                <option value="Point Guard">Point Guard</option>
+                <option value="Power Forward">Power Forward</option>
+                <option value="Shooting Guard">Shooting Guard</option>
+                <option value="Small Forward">Small Forward</option>
+            </select><br>
+            <label for="dob">Date of Birth: </label>
+            <input type="date" name="dob"><br>
+            <label for="ppg">PPG: </label>
+            <input type="number" name="ppg" step=".1" placeholder="PPG"><br>
+            <button id="submitForm" style="margin: 5px 0px;">Save Player</button>
+    </div>
+</body>
+
+</html>

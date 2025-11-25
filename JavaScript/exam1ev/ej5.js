@@ -1,0 +1,260 @@
+document.addEventListener("DOMContentLoaded", () => {
+        let cars = [
+            {
+            id: 432,
+            image: "toyota-corolla-2018.jpg",
+            brand: "Toyota",
+            model: "Corolla",
+            year: 2018,
+            fuelType: "Gasoline",
+            price: 15000,
+            },
+            {
+            id: 123,
+            image: "honda-civic-2020.jpg",
+            brand: "Honda",
+            model: "Civic",
+            year: 2020,
+            fuelType: "Gasoline",
+            price: 18000,
+            },
+            {
+            id: 874,
+            image: "tesla-model-3-2022.jpg",
+            brand: "Tesla",
+            model: "Model 3",
+            year: 2022,
+            fuelType: "Electric",
+            price: 40000,
+            },
+            {
+            id: 982,
+            image: "ford-focus-2017.jpg",
+            brand: "Ford",
+            model: "Focus",
+            year: 2017,
+            fuelType: "Diesel",
+            price: 12000,
+            },
+            {
+            id: 569,
+            image: "bmw-3-series-2019.jpg",
+            brand: "BMW",
+            model: "3 Series",
+            year: 2019,
+            fuelType: "Gasoline",
+            price: 25000,
+            },
+            {
+            id: 215,
+            image: "audi-a4-2016.jpg",
+            brand: "Audi",
+            model: "A4",
+            year: 2016,
+            fuelType: "Gasoline",
+            price: 22000,
+            },
+            {
+            id: 745,
+            image: "hyundai-elantra-2021.jpg",
+            brand: "Hyundai",
+            model: "Elantra",
+            year: 2021,
+            fuelType: "Gasoline",
+            price: 16000,
+            },
+            {
+            id: 387,
+            image: "toyota-camry-2015.jpg",
+            brand: "Toyota",
+            model: "Camry",
+            year: 2015,
+            fuelType: "Gasoline",
+            price: 14000,
+            },
+            {
+            id: 498,
+            image: "honda-accord-2019.jpg",
+            brand: "Honda",
+            model: "Accord",
+            year: 2019,
+            fuelType: "Hybrid",
+            price: 21000,
+            },
+            {
+            id: 234,
+            image: "chevrolet-malibu-2018.jpg",
+            brand: "Chevrolet",
+            model: "Malibu",
+            year: 2018,
+            fuelType: "Gasoline",
+            price: 17000,
+            },
+            {
+            id: 893,
+            image: "tesla-model-s-2021.jpg",
+            brand: "Tesla",
+            model: "Model S",
+            year: 2021,
+            fuelType: "Electric",
+            price: 80000,
+            },
+            {
+            id: 341,
+            image: "ford-mustang-2015.jpg",
+            brand: "Ford",
+            model: "Mustang",
+            year: 2015,
+            fuelType: "Gasoline",
+            price: 30000,
+            },
+            {
+            id: 777,
+            image: "volkswagen-golf-2020.jpg",
+            brand: "Volkswagen",
+            model: "Golf",
+            year: 2020,
+            fuelType: "Diesel",
+            price: 19000,
+            },
+            {
+            id: 115,
+            image: "nissan-altima-2021.jpg",
+            brand: "Nissan",
+            model: "Altima",
+            year: 2021,
+            fuelType: "Gasoline",
+            price: 20000,
+            },
+            {
+            id: 601,
+            image: "kia-optima-2019.jpg",
+            brand: "Kia",
+            model: "Optima",
+            year: 2019,
+            fuelType: "Gasoline",
+            price: 18000,
+            },
+            {
+            id: 492,
+            image: "hyundai-sonata-2018.jpg",
+            brand: "Hyundai",
+            model: "Sonata",
+            year: 2018,
+            fuelType: "Hybrid",
+            price: 19500,
+            },
+            {
+            id: 356,
+            image: "chevrolet-impala-2017.jpg",
+            brand: "Chevrolet",
+            model: "Impala",
+            year: 2017,
+            fuelType: "Gasoline",
+            price: 22000,
+            },
+            {
+            id: 664,
+            image: "bmw-x5-2020.jpg",
+            brand: "BMW",
+            model: "X5",
+            year: 2020,
+            fuelType: "Diesel",
+            price: 50000,
+            },
+            {
+            id: 842,
+            image: "mercedes-c-class-2019.jpg",
+            brand: "Mercedes",
+            model: "C-Class",
+            year: 2019,
+            fuelType: "Gasoline",
+            price: 35000,
+            },
+            {
+            id: 923,
+            image: "audi-q5-2022.jpg",
+            brand: "Audi",
+            model: "Q5",
+            year: 2022,
+            fuelType: "Hybrid",
+            price: 45000,
+            },
+    ];   
+
+    let container = document.getElementById("card-container");
+
+    function createCar () {
+        cars.forEach((car) => {
+            let card = document.createElement("div");
+            card.id = car.id;
+            card.className = "card";
+            let img = document.createElement("img");
+            let carName = document.createElement("h3");
+            let year = document.createElement("p");
+            let fuel = document.createElement("p");
+            let price = document.createElement("p");
+
+            let editbtn = document.createElement("button");
+            editbtn.id = "editbtn";
+            editbtn.className = "card-buttons",
+            editbtn.className = "button";
+            editbtn.textContent = "Edit";
+
+            let removebtn = document.createElement("button");
+            removebtn.id = "removebtn";
+            removebtn.className = "card-buttons",
+            removebtn.className = "button";
+            removebtn.textContent = "Remove";
+
+            img.src = "img/" + car.image;
+            carName.textContent = car.brand + " " + car.model;
+            year.textContent = "Year: " + car.year;
+            fuel.textContent = "Fuel Type: " + car.fuelType;
+            price.textContent = "Price: " + car.price;
+
+
+
+            card.appendChild(img);
+            card.appendChild(carName);
+            card.appendChild(year);
+            card.appendChild(fuel);
+            card.appendChild(price);
+
+            card.appendChild(editbtn);
+            card.appendChild(removebtn);
+
+            container.appendChild(card);
+        });
+    }
+    createCar();
+    let form = document.getElementById("form");
+    form.style.display = "none";
+    let cards = document.querySelectorAll(".card");
+    let editbtn = document.querySelector("#editbtn");
+
+
+    cards.forEach((card) => {                
+        let removebtn = card.lastElementChild;
+        removebtn.addEventListener("click", () => {
+            let index = cars.findIndex((c) => {return c.id == card.id});
+            card.remove();
+        });
+
+        let editbtn = document.querySelector("#editbtn");
+        editbtn.addEventListener("click", () => {
+            form.style.display = "block"
+            let editBrand = document.getElementById("brand");
+            let editModel = document.getElementById("model");
+            let editYear = document.getElementById("year");
+            let editFueltype = document.getElementById("fueltype");
+            let editPrice = document.getElementById("price");
+            let save = document.getElementById("save");
+            let cancel = document.getElementById("cancel");
+
+            editYear.value = card.year;
+            editFueltype.value = card.fuel;
+            editPrice.value = card.price;
+    })
+    })
+})  
