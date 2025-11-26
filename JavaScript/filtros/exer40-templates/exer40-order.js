@@ -173,4 +173,19 @@ window.onload = function () {
 
     drawAllPlayers(players);
 
+    let orderBySurnamerBtn = document.getElementById("b_surname");
+    orderBySurnamerBtn.addEventListener("click", (e) => {
+        let orderedPlayers = [...players];
+        orderedPlayers.sort((a,b) => {
+            if (a.surname < b.surname) {
+                return -1;
+            } else if (a.surname > b.surname) {
+                return 1;
+            } else {
+                return 0;
+            }
+        });
+        cleanContainer();
+        drawAllPlayers(orderedPlayers);
+    })
 }
