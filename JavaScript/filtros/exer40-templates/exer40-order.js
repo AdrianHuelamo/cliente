@@ -173,10 +173,12 @@ window.onload = function () {
 
     drawAllPlayers(players);
 
-    let orderBySurnamerBtn = document.getElementById("b_surname");
-    orderBySurnamerBtn.addEventListener("click", (e) => {
+    let orderBySurnameBtn = document.getElementById("b_surname");
+    let btnState = 0;
+    orderBySurnameBtn.addEventListener("click", (e) => {
         let orderedPlayers = [...players];
-        orderedPlayers.sort((a,b) => {
+        // 0 = alphabetic order | 1 = reverse order | 2 = no order
+        let orderBySurname = (a,b) => {
             if (a.surname < b.surname) {
                 return -1;
             } else if (a.surname > b.surname) {
@@ -184,8 +186,37 @@ window.onload = function () {
             } else {
                 return 0;
             }
-        });
+        }
+
+        if(btnState == 0) {
+            orderedPlayers.sort(orderBySurname);
+            btnState++;
+            orderBySurnameBtn.innerHTML = "Surname &#8595;";
+        } else if (btnState == 1) {
+            orderedPlayers.sort(orderBySurname).reverse();
+            btnState++;
+            orderBySurnameBtn.innerHTML = "Surname &#8593;";
+        } else {
+            btnState = 0;
+            orderBySurnameBtn.innerHTML = "Surname";
+        }
         cleanContainer();
         drawAllPlayers(orderedPlayers);
-    })
+    });
+
+    let orderByPosAgeBtn = document.querySelector("#b_pos-age");
+    orderByPosAgeBtn.addEventListener("click", function (e) {
+        let orderedPlayers = [...players];
+        orderedPlayers.sort((a,b) => {
+            if (a.position < b.position) {
+                return -1;
+            } else if (a.position > b.position) {
+                return 1;
+            } else {
+                return a.pointsPerGame - b.pointsPerGame;
+            }
+        })
+        cleanContainer();
+        drawAllPlayers(orderedPlayers);
+    });
 }
