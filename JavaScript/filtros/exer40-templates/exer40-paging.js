@@ -171,4 +171,35 @@ window.onload = function () {
         }
     }
 
+    const backButton = document.querySelector("#back");
+    const pageInfo = document.querySelector("#page-info");
+    const nextButton = document.querySelector("#next");
+    let currentPage = 1;
+    const elementsPerPage = 3;
+    let getTotalPages = Math.ceil(players.length / elementsPerPage);
+
+    function getDataSlice(page) {
+        let startSlice = page * elementsPerPage - elementsPerPage;
+        let endSlice = page * elementsPerPage;
+        return players.slice(startSlice, endSlice);
+    }
+
+    function nextPage() {
+        currentPage++;
+        drawPage();
+    }
+
+    function backPage() {
+        currentPage--;
+        drawPage();
+    } 
+
+    function drawPage() {
+        currentPage;
+    }
+
+    backButton.addEventListener("click", backPage);
+    nextButton.addEventListener("click", nextPage);
+    
+    // drawAllPlayers(getDataSlice(currentPage));
 }
