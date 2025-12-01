@@ -172,11 +172,13 @@ window.onload = function () {
     }
 
     const backButton = document.querySelector("#back");
-    const pageInfo = document.querySelector("#page-info");
+    const pageInfo = document.getElementById("page-info");
     const nextButton = document.querySelector("#next");
     let currentPage = 1;
-    const elementsPerPage = 3;
+    const elementsPerPage = 5;
     let getTotalPages = Math.ceil(players.length / elementsPerPage);
+
+    drawPage();
 
     function getDataSlice(page) {
         let startSlice = page * elementsPerPage - elementsPerPage;
@@ -194,12 +196,28 @@ window.onload = function () {
         drawPage();
     } 
 
+    function manageButtons() {
+        if(currentPage==1){
+            backButton.disabled = true;
+        } else {
+            backButton.disabled = false;
+        }
+
+        if(currentPage==getTotalPages){
+            nextButton.disabled = true;
+        } else {
+            nextButton.disabled = false;
+        }
+    }
+
     function drawPage() {
-        currentPage;
+        cleanContainer();
+        manageButtons();
+        let playersSlice = getDataSlice(currentPage);
+        drawAllPlayers(playersSlice);
+        pageInfo.textContent = `${currentPage} / ${getTotalPages}`
     }
 
     backButton.addEventListener("click", backPage);
     nextButton.addEventListener("click", nextPage);
-    
-    // drawAllPlayers(getDataSlice(currentPage));
 }
