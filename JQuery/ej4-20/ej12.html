@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ej12</title>
+    <script src="jquery-3.7.1.js" defer></script>
+    <script src="ej12.js" defer></script>
+</head>
+<body>
+    <form id="simpleForm" action="#" method="post">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" placeholder="Enter your name" value="Jose">
+    <br>
+        <label for="email">Email Address:</label>
+        <input type="email" id="email" name="email" placeholder="name@example.com" value="jose@solvam.es">
+    <br>
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" min="1" max="100" value="15">
+    <br>
+        <label for="gender">Gender:</label>
+        <select id="gender" multiple="multiple">
+            <option value="man">Man</option>
+            <option value="woman">Woman</option>
+            <option value="klingon">Klingon</option>
+            <option value="hobbit">Hobbit</option>
+            <option value="saiyan">Saiyan</option>
+        </select>
+    <br>
+    <input type="checkbox" id="lang_js" name="lenguajes" value="javascript">
+    <label for="lang_js">JavaScript</label>
+    <input type="checkbox" id="lang_py" name="lenguajes" value="python">
+    <label for="lang_py">Python</label>
+    <input type="checkbox" id="lang_java" name="lenguajes" value="java">
+    <label for="lang_java">Java</label>
+    <input type="checkbox" id="lang_php" name="lenguajes" value="php">
+    <label for="lang_php">PHP</label>
+    <br>
+    <button type="submit" id="btnSubmit">Submit Data</button>
+</form>
+</body>
+</html>
