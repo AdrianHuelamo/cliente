@@ -1,5 +1,4 @@
 window.onload = function () {
-
     const players = [
         {
             id: 7,
@@ -119,8 +118,7 @@ window.onload = function () {
             pointsPerGame: 10.2,
         }
     ];
-
-
+    
     let body = document.querySelector("body");
     let container = document.createElement("div");
     body.appendChild(container);

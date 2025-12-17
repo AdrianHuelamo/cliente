@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="js/jquery-3.7.1.js"></script>
+    <style>
+        body {
+            min-width: 810px;
+        }
+
+        #container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: start;
+            /* ya no center */
+            width: 1000px;
+            /* 3 tarjetas de 250px + 2 gaps de 20px */
+            margin: 0 auto;
+            /* centrar el contenedor */
+        }
+
+
+        /* Tarjeta individual */
+        .card {
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 250px;
+            /* Fijo para que entren 3 por fila con espacio */
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .card img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .card h1 {
+            font-size: 20px;
+            margin: 10px 0 5px 0;
+        }
+
+        .card h3 {
+            font-size: 16px;
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .invisible {
+            display: none;
+        }
+    </style>
+
+
+    <script>
+
+        $(document).ready(function () {
+
+            let actorsList = [
+                {
+                    id: 1,
+                    image: "./img/robertdowney.jpg",
+                    name: "Robert Downey Jr.",
+                    career: "Dramatic Arts",
+                    age: 59,
+                    rating: 8.5
+                },
+                {
+                    id: 2,
+                    image: "./img/scarlettjohansson.jpg",
+                    name: "Scarlett Johansson",
+                    career: "Film and Television",
+                    age: 40,
+                    rating: 8.7
+                },
+                {
+                    id: 3,
+                    image: "./img/leonardodicaprio.jpg",
+                    name: "Leonardo DiCaprio",
+                    career: "Professional Acting",
+                    age: 50,
+                    rating: 9.1
+                },
+                {
+                    id: 4,
+                    image: "./img/natalieportman.jpg",
+                    name: "Natalie Portman",
+                    career: "Psychology at Harvard",
+                    age: 43,
+                    rating: 8.2
+                },
+                {
+                    id: 5,
+                    image: "./img/denzelwashington.jpg",
+                    name: "Denzel Washington",
+                    career: "Journalism and Drama",
+                    age: 70,
+                    rating: 8.8
+                },
+                {
+                    id: 6,
+                    image: "./img/jenniferlawrence.jpg",
+                    name: "Jennifer Lawrence",
+                    career: "Theater Training",
+                    age: 34,
+                    rating: 8.3
+                },
+                {
+                    id: 7,
+                    image: "./img/bradpitt.jpg",
+                    name: "Brad Pitt",
+                    career: "Journalism and Advertising",
+                    age: 61,
+                    rating: 8.6
+                },
+                {
+                    id: 8,
+                    image: "./img/annehathaway.jpg",
+                    name: "Anne Hathaway",
+                    career: "English and Acting",
+                    age: 42,
+                    rating: 8.0
+                },
+                {
+                    id: 9,
+                    image: "./img/morganfreeman.jpg",
+                    name: "Morgan Freeman",
+                    career: "Acting and Directing",
+                    age: 87,
+                    rating: 9.0
+                },
+                {
+                    id: 10,
+                    image: "./img/emmastone.jpg",
+                    name: "Emma Stone",
+                    career: "Performing Arts",
+                    age: 36,
+                    rating: 8.4
+                }
+            ];
+
+            function clearContainer() {
+                let container = $("#container");
+                container.empty();
+            }
+
+            let container = $("#container");
+
+            function drawActors() {
+
+                actorsList.forEach(actor => {
+                    let divCard = $('<div class="card"></div>');
+                    divCard.attr("data-id", actor.id);
+
+                    let image = $('<img>');
+                    image.attr("src", actor.image);
+
+                    let name = $('<h1>');
+                    name.text(actor.name);
+
+                    let career = $('<h3>');
+                    career.text(actor.career);
+
+                    let age = $('<h3>');
+                    age.text("Edad: " + actor.age);
+
+                    let rating = $('<h3>');
+                    rating.text("Rating: " + actor.rating);
+
+                    let editBtn = $('<button id="edit">');
+                    editBtn.text("Edit actor");
+
+                    image.appendTo(divCard);
+                    name.appendTo(divCard);
+                    career.appendTo(divCard);
+                    age.appendTo(divCard);
+                    rating.appendTo(divCard);
+                    editBtn.appendTo(divCard);
+
+                    divCard.appendTo(container);
+
+                    editBtn.on("click", function () {
+                        $("#id").val(actor.id);
+                        $("#id").attr({ "disabled": true });
+                        $("#name").val(actor.name);
+                        $("#image").val(actor.image);
+                        $("#career").val(actor.career);
+                        $("#age").val(actor.age);
+                        $("#rating").val(actor.rating);
+                    })
+                });
+            }
+            clearContainer();
+            drawActors();
+
+            //add player
+            let saveBtn = $("#submit");
+
+            saveBtn.on("click", function (e) {
+                e.preventDefault();
+
+
+                let newId = parseInt($("#id").val());
+                let myActor = actorsList.find(actor => actor.id === newId);
+                console.log(myActor);
+
+
+
+                if (false) {
+                    // if (!newId || !newImage || !newName || !newCareer || !newAge || !newRating) {
+
+                    alert("Rellena los campos");
+                    return;
+
+                } else {
+                    myActor.image = $("#image").val();
+                    myActor.name = $("#name").val();
+                    myActor.career = $("#career").val();
+                    myActor.age = $("#age").val();
+                    myActor.rating = parseFloat($("#rating").val());
+                }
+                $("form")[0].reset();
+                $("#id").removeAttr("disabled");
+                clearContainer();
+                drawActors();
+
+            });
+
+            //toggle
+            let togleBtn = $("#showform");
+            let myForm = $("#form");
+
+            togleBtn.on("click", function () {
+                myForm.toggle();
+            });
+        });
+
+    </script>
+</head>
+
+<body>
+    <div id="form">
+        <h2>Registrar Nuevo Actor</h2>
+        <form>
+            <label for="id">Id:</label>
+            <input type="hidden" id="id" name="id"><br><br>
+
+            <label for="image">Image URL:</label>
+            <input type="text" id="image" name="image" placeholder="./img/actor.jpg"><br><br>
+
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name"><br><br>
+
+            <label for="career">Career:</label>
+            <input type="text" id="career" name="career"><br><br>
+
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age"><br><br>
+
+            <label for="rating">Rating:</label>
+            <input type="number" step="0.01" id="rating" name="rating"><br><br>
+
+            <button id="submit">Guardar Jugador</button>
+        </form>
+    </div>
+    <button id="showform">SHOW</button>
+    <div id="container"></div>
+</body>
+
+</html>

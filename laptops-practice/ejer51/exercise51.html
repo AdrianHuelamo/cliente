@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../jquery-3.7.1.js"></script>
+    <script>
+        $(document).ready(function () {
+            let myImages = [
+                "baltasar.png",
+                "gaspar.png",
+                "jesus.png",
+                "jclaus.png",
+                "lorenzo-activista.png"
+            ]
+
+            myImages.forEach((img) => {
+                $(".imagenes").append(`<img src='imagenes/${img}' class='img-carrousel'/> `)
+            });
+
+            $(".img-carrousel").hover(function () {
+                $(this).css({
+                    transform: "scale(1.1)"
+                })
+            }
+                , function () {
+                    $(this).css({ transform: "scale(1)" });
+                     $("#main").attr("src", "")
+
+                })
+
+
+            $(".img-carrousel").click(function () {
+                $("#main").attr("src", $(this).attr("src"))
+            })
+        })
+
+
+
+    </script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-direction: column;
+
+        }
+
+        .imagen {
+            width: 500px;
+            height: 500px;
+            border: 5px solid;
+        }
+
+        img {
+            object-fit: cover;
+            width: 75%;
+            height: 100%;
+
+        }
+
+        #main{
+            width: 100%;
+        }
+
+        .imagenes {
+            display: flex;
+            width: 300px;
+            justify-content: center;
+            gap: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="imagen">
+        <img id="main" src="" alt="imagen vacia">
+    </div>
+    <div class="imagenes">
+
+    </div>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="js/jquery-3.7.1.js"></script>
+    <style>
+        body {
+            background-color: #121212;
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 40px;
+            margin-right: 200px;
+            overflow-x: hidden;
+        }
+
+        #container {
+            display: grid;
+            grid-template-columns: repeat(3, 300px);
+            /* 3 columnas fijas */
+            gap: 50px 260px;
+            /* espacio entre filas y columnas */
+            justify-content: center;
+        }
+
+        .card {
+            position: relative;
+            background: linear-gradient(145deg, #1f1f1f, #292929);
+            border: 2px solid #444;
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            padding: 20px;
+            width: 510px;
+            height: 950px;
+            /* altura uniforme */
+            box-sizing: border-box;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* CENTRAR HORIZONTALMENTE */
+            justify-content: center;
+            /* CENTRAR VERTICALMENTE */
+            text-align: center;
+            /* CENTRAR TEXTO */
+        }
+
+
+
+        .card img {
+            position: relative;
+            top: 70px;
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+
+        }
+
+        .card h1 {
+            font-size: 40px;
+            margin: 80px 0 5px;
+            color: #f9f9f9;
+        }
+
+        .card h3 {
+            font-size: 20px;
+            margin: 10px 0px 0px 0px;
+            font-weight: normal;
+            color: #ccc;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(255, 0, 0, 0.6);
+        }
+
+        .info,
+        .edit {
+            background-color: lightgray;
+            color: black;
+            border: none;
+            font-size: 18px;
+            border-radius: 5px;
+            padding: 12px 20px;
+            /* Más alto y acolchonado */
+            cursor: pointer;
+            white-space: nowrap;
+            width: 30%;
+            box-sizing: border-box;
+            height: auto;
+            /* que se ajuste al contenido */
+            line-height: 1.2;
+            /* mejor legibilidad */
+        }
+
+        /* Contenedor .card debe permitir alinear botones horizontalmente */
+        .card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .card .info,
+        .card .edit {
+            display: inline-block;
+            margin-top: 20px;
+
+        }
+
+        .edit {
+            align-items: center;
+        }
+
+        /* Agrupar botones automáticamente en una sola fila con wrap */
+        .card button.info,
+        .card button.edit {
+            vertical-align: middle;
+        }
+
+        .hability {
+            top: 30px;
+            position: absolute;
+            /* Ajusta según altura del botón y padding */
+            background-color: #333;
+            padding: 5px 10px;
+            border: 1px solid white;
+            border-radius: 5px;
+            color: white;
+            z-index: 10;
+        }
+
+
+
+        /* Botón SHOW */
+        .showform {
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            position: fixed;
+            top: 40px;
+            left: 40px;
+            z-index: 1000;
+        }
+
+        .showform:hover {
+            background-color: #cc0000;
+        }
+
+        /* Formulario lateral */
+        #form {
+            position: fixed;
+            top: 0;
+            right: -500px;
+            /* Oculto fuera de vista */
+            height: 100%;
+            width: 400px;
+            background-color: #1e1e1e;
+            border-left: 2px solid #444;
+            box-shadow: -2px 0 10px rgba(255, 0, 0, 0.5);
+            padding: 30px 20px;
+            overflow-y: auto;
+            transition: right 0.5s ease;
+            z-index: 999;
+        }
+
+        #form.visible {
+            right: 0;
+            /* Se desliza dentro de la vista */
+        }
+
+        #form h2 {
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+
+        #form form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #form label {
+            font-size: 16px;
+            margin-bottom: 5px;
+            color: #ccc;
+        }
+
+        #form input {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: #333;
+            color: white;
+        }
+
+        #submit {
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #submit:hover {
+            background-color: #cc0000;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        select {
+            width: 250px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            transition: border-color 0.3s ease;
+        }
+
+        select:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .edit {
+            background-color: lightgray;
+        }
+    </style>
+
+    <script>
+
+        $(document).ready(function () {
+
+            let heroList = [
+
+                {
+                    id: 1,
+                    image: "./img/ironman.webp",
+                    name: "Iron Man",
+                    role: "Armored Genius",
+                    type: "Ongoing",
+                    hability: " Your total Power is doubled here",
+                    rating: 15.7
+                },
+                {
+                    id: 2,
+                    image: "./img/captainamerica.webp",
+                    name: "Captain America",
+                    role: "Super Soldier",
+                    type: "Ongoing",
+                    hability: "Your other Ongoing cards here have +2 Power",
+                    rating: 10
+                },
+                {
+                    id: 3,
+                    image: "./img/thor.webp",
+                    name: "Thor",
+                    role: "Asgardian God",
+                    type: "On Reveal",
+                    hability: "Shuffle Mjolnir into your deck",
+                    rating: 7.5
+                },
+                {
+                    id: 4,
+                    image: "./img/hulk.webp",
+                    name: "Hulk",
+                    role: "Gamma Mutate",
+                    type: "No hability",
+                    hability: "“HULK SMASH!”",
+                    rating: 8.1
+                },
+                {
+                    id: 5,
+                    image: "./img/blackwidow.webp",
+                    name: "Black Widow",
+                    role: "Elite Spy",
+                    type: "Activate",
+                    hability: " Add a Widow's Bite to your opponent’s hand",
+                    rating: 6.5
+                },
+                {
+                    id: 6,
+                    image: "./img/spiderman.webp",
+                    name: "Spider-Man",
+                    role: "Wall-Crawler",
+                    type: "On Reveal",
+                    hability: "Move to another location and pull an enemy card from here to there",
+                    rating: 9.0
+                },
+                {
+                    id: 7,
+                    image: "./img/doctorstrange.webp",
+                    name: "Doctor Strange",
+                    role: "Master of the Mystic Arts",
+                    type: "On Reveal",
+                    hability: "End of Turn: Merge one of your created cards into this",
+                    rating: 6.0
+                },
+                {
+                    id: 8,
+                    image: "./img/blackpanther.webp",
+                    name: "Black Panther",
+                    role: "Wakandan King",
+                    type: "On Reveal",
+                    hability: "Double this card’s Power",
+                    rating: 8.0
+                },
+                {
+                    id: 9,
+                    image: "./img/captainmarvel.webp",
+                    name: "Captain Marvel",
+                    role: "Cosmic Heroine",
+                    type: "Ongoing",
+                    hability: "At the end of the game, move to a location that wins you the game. (If possible)",
+                    rating: 7.0
+                },
+                {
+                    id: 10,
+                    image: "./img/scarletwitch.webp",
+                    name: "Scarlet Witch",
+                    role: "Reality Warper",
+                    type: "On Reveal",
+                    hability: "Replace this location with a new one",
+                    rating: 11.3
+                }
+            ];
+
+            let container = $("#container");
+
+            function cleanContainer() {
+                let container = $("#container");
+                container.empty();
+            }
+
+            function drawCards() {
+
+                heroList.forEach(hero => {
+
+                    let divCard = $("<div class='card'></div>");
+
+                    let image = $("<img>");
+                    image.attr("src", hero.image);
+                    image.css({ "height": "512", "width": "512" });
+
+                    let name = $("<h1>");
+                    name.text(hero.name);
+
+                    let role = $("<h3>");
+                    role.text("Role: " + hero.role);
+
+                    let type = $("<h3>");
+                    type.text("Type: " + hero.type);
+
+                    let rating = $("<h3>");
+                    rating.text("Rating: " + hero.rating);
+
+                    let infoBtn = $("<button class='info'>");
+                    infoBtn.text("Hability");
+
+                    let btnEdit = $("<button class='edit'>");
+                    btnEdit.text("Edit");
+
+                    infoBtn.one("click", function () {
+                        let infoDiv = $("<div class='hability'>").text(hero.hability);
+                        infoDiv.insertBefore(image);
+
+                        $(this).on("click", function () {
+                            infoDiv.fadeToggle(500);
+                        });
+                    });
+
+                    divCard.append(image);
+                    divCard.append(name);
+                    divCard.append(role);
+                    divCard.append(type);
+                    divCard.append(rating);
+                    divCard.append(infoBtn);
+                    divCard.append(btnEdit);
+
+                    container.append(divCard);
+
+                    btnEdit.on("click", function () {
+
+                        $("#form").addClass("visible");
+
+                        $("#id").val(hero.id);
+                        $("#id").attr({ "disabled": true });
+                        $("#image").val(hero.image);
+                        $("#name").val(hero.name);
+                        $("#role").val(hero.role);
+                        $("#type").val(hero.type);
+                        $("#rating").val(hero.rating);
+                        $("#hability").val(hero.hability);
+                    });
+                });
+            }
+            cleanContainer();
+            drawCards();
+
+            //edit
+
+            let saveBtn = $("#submit");
+
+            saveBtn.on("click", function (e) {
+                e.preventDefault();
+
+                let newId = parseInt($("#id").val());
+                let myHero = heroList.find(hero => hero.id === newId);
+                console.log(myHero);
+
+                if (false) {
+                    alert("Rellena los campos");
+                    return;
+                } else {
+                    myHero.image = $("#image").val();
+                    myHero.name = $("#name").val();
+                    myHero.role = $("#role").val();
+                    myHero.type = $("#type").val();
+                    myHero.rating = parseFloat($("#rating").val());
+                    myHero.hability = $("#hability").val();
+                }
+                $("form")[0].reset();
+                $("#id").removeAttr("disabled");
+
+                cleanContainer();
+                drawCards();
+            });
+
+
+            //toggle
+
+            $(".showform").on("click", function () {
+                $("#form").toggleClass("visible");
+
+                if ($("#form").hasClass("visible")) {
+                    $(this).text("HIDE");
+                } else {
+                    $(this).text("SHOW");
+                }
+            });
+        });
+
+
+    </script>
+</head>
+
+<body>
+    <div id="form" class="invisible">
+        <h2>Register new card</h2>
+        <form>
+            <label for="id">Id:</label>
+            <input type="number" id="id" name="id"><br><br>
+
+            <label for="image">Image URL:</label>
+            <input type="text" id="image" name="image" placeholder="/img/name.webp"><br><br>
+
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name"><br><br>
+
+            <label for="role">Role:</label>
+            <input type="text" id="role" name="role"><br><br>
+
+            <label for="type">Type:</label>
+            <select id="type" name="type">
+                <option value="Ongoing">Ongoing</option>
+                <option value="On Reveal">On Reveal</option>
+                <option value="Move">Move</option>
+                <option value="No hability">No hability</option>
+                <option value="Activate">Activate</option>
+                <option value="Rule out">Rule out</option>
+                <option value="Destroy">Destroy</option>
+            </select><br><br>
+
+            <label for="rating">Rating:</label>
+            <input type="number" step="0.01" id="rating" name="rating"><br><br>
+
+            <label for="hability">Hability:</label>
+            <input type="text" id="hability" name="hability"><br><br>
+            <button id="submit">Save Card</button>
+        </form>
+    </div>
+    <button class="showform">SHOW</button>
+    <div id="container"></div>
+</body>
+
+</html>

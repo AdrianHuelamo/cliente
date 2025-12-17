@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../jquery-3.7.1.js" type="text/JavaScript"></script>
+    <script>
+        $(document).ready(function () {
+            let books = [
+                {
+                    id: 1,
+                    cover: "baltasar.png",
+                    title: "The Great Gatsby",
+                    author: "F. Scott Fitzgerald",
+                    alreadyRead: true
+                },
+                {
+                    id: 2,
+                    cover: "jesus.png",
+                    title: "To Kill a Mockingbird",
+                    author: "Harper Lee",
+                    alreadyRead: false
+                },
+                {
+                    id: 3,
+                    cover: "breakingjs.png",
+                    title: "1984",
+                    author: "George Orwell",
+                    alreadyRead: true
+                },
+                {
+                    id: 4,
+                    cover: "lorenzo-activista.png",
+                    title: "The Hobbit",
+                    author: "J.R.R. Tolkien",
+                    alreadyRead: false
+                },
+                {
+                    id: 5,
+                    cover: "duendejs.png",
+                    title: "Pride and Prejudice",
+                    author: "Jane Austen",
+                    alreadyRead: true
+                }
+            ];
+
+            $("main").append("<div class='books'></div>");
+
+            function drawBook(book) {
+                $(".books").append(`<div class='book' id='${book.id}'></div>`)
+                $(`.book#${book.id}`).append(`<img src='../ejer51/imagenes/${book.cover}'/>`)
+                $(`.book#${book.id}`).append(`<h1 id='title'>${book.title}</h1>`)
+                $(`.book#${book.id}`).append(`<p id='author'>${book.author}</p>`)
+                $(`.book#${book.id}`).append(`<button class='removeBtn'>Remove</button>`)
+                
+                if (book.alreadyRead) {
+                    $(`.book#${book.id}`).addClass("alreadyRead")
+                } else {
+                    $(`.book#${book.id}`).addClass("notReadYet")
+                }
+                $(`.book#${book.id}`).on("click", function () {
+                    if (book.alreadyRead) {
+                        $(this).removeClass("alreadyRead").addClass("notReadYet");
+                        book.alreadyRead = false;
+                    } else {
+                        $(this).removeClass("notReadYet").addClass("alreadyRead");
+                        book.alreadyRead = true;
+                    }
+                })
+                $(`.book#${book.id} .removeBtn`).click(function () {
+                    removeCard(book.id)
+                })
+            }
+            if (localStorage.books){
+                let myBook = localStorage.getItem("books");
+                books = JSON.parse(myBook);
+            }else {
+                localStorage.books = JSON.stringify(books);
+
+            }
+
+            function drawAllBooks() {
+                books.forEach((book) => {
+                    drawBook(book);
+                })
+            }
+            function cleanContainer() {
+                $(".books").html("")
+            }
+
+            drawAllBooks(books);
+
+            function removeCard(id) {
+                let index = books.findIndex((book) => book.id == id);
+                console.log(index);
+                books.splice(index, 1);
+                localStorage.books = JSON.stringify(books);
+                cleanContainer();
+                drawAllBooks();
+
+            }
+
+
+        })
+
+
+
+    </script>
+    <style>
+        .books {
+            display: flex;
+            gap: 20px;
+            justify-content: space-between;
+
+        }
+
+        .book {
+            border: 2px solid;
+            box-shadow: 1px 1px 1px 1px;
+            height: 400px;
+            padding: 5px;
+            display: flex;
+            flex-direction: column;
+
+        }
+
+        img {
+            width: 100%;
+            height: 50%;
+        }
+
+        .alreadyRead {
+            border: 2px solid blue;
+
+        }
+
+        .notReadYet {
+            border: 2px solid red;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="container">
+        <h1 class="title">My Book List</h1>
+
+    </main>
+
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix Database</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap');
+
+        body {
+            font-family: 'Architects Daughter', cursive;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .movie {
+            width: 300px;
+            background: #fff;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            margin-left: 50px;
+            margin-bottom: 10px;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .poster {
+            display: block;
+            margin: 0 auto;
+        }
+
+        .title {
+            font-size: 1.5em;
+            margin: 0px;
+            font-weight: bold;
+        }
+
+        .text {
+            font-size: 1.2em;
+            margin: 0px;
+        }
+
+        input,
+        select,
+        button {
+            width: 100%;
+            font-size: 16pt;
+            font-family: 'Architects Daughter', cursive;
+        }
+
+        button {
+            width: 175px;
+        }
+
+        #form-container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 250px;
+            text-align: center;
+            border: 2px solid black;
+            background-color: white;
+            padding: 10px;
+        }
+
+        #form-content h2 {
+            font-size: 1.5em;
+        }
+
+        #show-hide-form {
+            width: 100%;
+            font-size: 16px;
+            padding: 5px;
+            cursor: pointer;
+            background-color: black;
+            color: white;
+            border: none;
+        }
+
+        main {
+            margin-left: 130px;
+            padding: 20px;
+        }
+
+        #all,
+        #favourites {
+            width: 80%;
+            display: inline-block;
+            clear: both;
+            text-align: left;
+        }
+
+        #mode {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            margin-right: 10px;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin: 0px;
+        }
+
+        h2 {
+            text-align: center;
+            margin: 0px 0px 10px 0px;
+            font-size: 2.5em;
+        }
+
+        .divCard {
+            width: 250px;
+            border: 3px solid black;
+            float: left;
+            margin: 30px;
+            padding: 30px;
+            text-align: center;
+            border-radius: 20px;
+            box-shadow: 0px 0px 15px 10px lightcoral;
+        }
+
+        .buttondel,
+        .buttonok {
+            margin-top: 30px;
+            height: 40px;
+            width: 100px;
+        }
+
+        .newCard {
+            width: 250px;
+            border: 3px solid black;
+            float: left;
+            margin: 30px;
+            padding: 30px;
+            text-align: center;
+            border-radius: 20px;
+            box-shadow: 0px 0px 15px 10px lightcoral;
+        }
+    </style>
+
+    <script type="text/javascript" src="/assets/jquery-3.7.1.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            let movies = [
+                {
+                    id: 3,
+                    title: "Matrix",
+                    director: "The Wachowskis",
+                    genre: "Sci-Fi",
+                    image: "img/matrix.jpg",
+                },
+                {
+                    id: 8,
+                    title: "Back to the Future",
+                    director: "Robert Zemeckis",
+                    genre: "Adventure",
+                    image: "img/bttf.jpg",
+                },
+                {
+                    id: 54,
+                    title: "The Godfather",
+                    director: "Francis Ford Coppola",
+                    genre: "Crime",
+                    image: "img/godfather.jpg",
+                },
+                {
+                    id: 22,
+                    title: "Lord of the Rings",
+                    director: "Peter Jackson",
+                    genre: "Fantasy",
+                    image: "img/tlotr.jpg",
+                },
+                {
+                    id: 17,
+                    title: "The Goonies",
+                    director: "Richard Donner",
+                    genre: "Adventure",
+                    image: "img/goonies.jpg",
+                },
+                {
+                    id: 91,
+                    title: "King Kong",
+                    director: "Peter Jackson",
+                    genre: "Action",
+                    image: "img/kingkong.jpg",
+                }
+            ];
+
+
+
+            //Crear tarjetas
+
+            function createCard() {
+                let AllMovies = $("section#all");
+
+                movies.forEach(movie => {
+                    let divCard = $("<div></div>").addClass("divCard");
+
+                    let title = $("<h1></h1>").addClass("title").text(movie.title);
+                    let director = $("<p></p>").addClass("director").text("Director: " + movie.director);
+                    let genre = $("<p></p>").addClass("genre").text("Genre: " + movie.genre);
+                    let image = $("<img>").attr("src", movie.image).css({ "height": "300" });
+                    let okbutton = $("<button class='buttonok'><img src='img/like.png', height='20px'></button>");
+                    let delbutton = $("<button class='buttondel'>Delete</button>");
+
+                    divCard.append(title, director, genre, image, okbutton, delbutton);
+
+                    $("body").append(divCard);
+
+                    AllMovies.append(divCard);
+                });
+            }
+
+            createCard();
+
+            //Boton eliminar
+            $(".buttondel").on("click", function () {
+                let card = $(this).parent();
+                card.remove();
+            });
+
+            //Cambiar al modo oscuro
+            $("#mode button").on("click", function () {
+                $("#mode").toggleClass("dark-mode");
+
+                if ($("#mode").hasClass("dark-mode")) {
+                    $("#mode button").css({ "background-color": "white", "color": "black" });
+                    $("body").css({ "background-color": "black" });
+                    $(".divCard").css({ "background-color": "grey", "color": "white" });
+                    $("h1").css({ "color": "white" });
+                    $("#favourites").css({ "color": "white" });
+                    $("#all").css({ "color": "white" });
+                    $("#form-container").css({ "background-color": "grey", "color": "white" });
+                    $(".newCard").css({ "background-color": "grey" });
+
+                } else {
+                    $("#mode button").css({ "background-color": "black", "color": "white" });
+                    $("body").css({ "background-color": "white" });
+                    $(".divCard").css({ "background-color": "white", "color": "black" });
+                    $("h1").css({ "color": "black" });
+                    $("#favourites").css({ "color": "black" });
+                    $("#all").css({ "color": "black" });
+                    $("#form-container").css({ "background-color": "white", "color": "black" });
+                    $(".newCard").css({ "background-color": "white" });
+                }
+            });
+
+            //Pasar tarjetas al div de favoritos
+            $(".buttonok").on("click", function () {
+                let card = $(this).parent();
+                card.appendTo($("#favourites"));
+
+                //Numero de peliculas favoritas
+                let titleFav = $("#favourites h2");
+                let arrayMoviesFav = $("#favourites .divCard");
+                titleFav.text("Favourites" + arrayMoviesFav.length());
+            });
+
+            //Añadir tarjetas mediante el formulario
+            let AllMovies = $("#all");
+
+            $("button[type='submit']").on("click", function (e) {
+                e.preventDefault();
+                let titleVal = $("input[type='text']:eq(0)").val();
+                let directorVal = $("input[type='text']:eq(1)").val();
+                let genreVal = $("select").val();
+                let urlVal = $("input[type='text']:eq(2)").val();
+
+                let newCard = $("<div class='newCard'></div>");
+
+                let newTitle = $("<h2></h2>").text(titleVal);
+                let newdirector = $("<h3></h3>").text(directorVal);
+                let newgenre = $("<h3></h3>").text(genreVal);
+                let newurl = $("<img>").attr("src", urlVal).css({ "height": "300" });
+                let newbtnOk = $("<button class='newbuttonok'><img src='img/like.png', height='20px'></button>");
+                let newbtnDel = $("<button class='newbuttondel'>Delete</button>");
+
+                newCard.append(newTitle, newdirector, newgenre, newurl, newbtnOk, newbtnDel);
+
+                AllMovies.append(newCard);
+            });
+        });
+
+    </script>
+</head>
+
+<body>
+    <div id="form-container">
+        <button id="show-hide-form">Show Form</button>
+        <div id="form-content">
+            <h2>New Movie</h2>
+            <form>
+                <input type="text" placeholder="Title"><br>
+                <input type="text" placeholder="Director"><br>
+                <select>
+                    <option value="" disabled selected>Genre</option>
+                    <option value="Action">Action</option>
+                    <option value="Adventure">Adventure</option>
+                    <option value="Comedy">Comedy</option>
+                    <option value="Crime">Crime</option>
+                    <option value="Fantasy">Fantasy</option>
+                    <option value="Sci-Fi">Sci-Fi</option>
+                </select>
+                <input type="text" placeholder="Image URL"><br>
+                <br>
+                <button type="submit">Add</button>
+            </form>
+        </div>
+    </div>
+    <div id="mode">
+        <button>Dark Mode</button>
+    </div>
+    <header>
+        <img src="./img/netflix.png" width="100">
+        <h1>NETFLIX DATABASE</h1>
+    </header>
+    <main>
+        <section id="favourites">
+            <h2>Favourites</h2>
+        </section>
+        <section id="all">
+            <h2>All Movies</h2>
+        </section>
+    </main>
+</body>
+
+</html>
