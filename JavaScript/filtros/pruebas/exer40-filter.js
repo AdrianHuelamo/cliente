@@ -130,7 +130,7 @@ window.onload = function () {
     function applyAllFilters() {
       // PASO 0: Empezamos con una COPIA de todos los jugadores.
       // Si no filtramos nada, esta lista se quedará llena.
-      let filteredPlayers = players;
+      let filteredPlayers = [...players];
   
       // PASO 1: Filtro de Posición
       // Si el valor NO es "blank", significa que el usuario eligió una posición.
@@ -148,7 +148,7 @@ window.onload = function () {
         // Convertimos a minúsculas (.toLowerCase) ambos lados para comparar igual
         // .includes() devuelve true si lo que escribí está dentro del nombre
         return fullName.toLowerCase().includes(pName.value.toLowerCase());
-      });
+      }); 
   
       // PASO 3: Filtro de Puntos Mínimos
       let minPPG = parseFloat(pMinPPG.value); // Convertimos texto a número decimal

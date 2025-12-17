@@ -237,8 +237,11 @@ document.addEventListener("DOMContentLoaded", () => {
     cards.forEach((card) => {                
         let removebtn = card.lastElementChild;
         removebtn.addEventListener("click", () => {
-            let index = cars.findIndex((c) => {return c.id == card.id});
+            let index = cars.findIndex((c) => c.id == card.id);
             card.remove();
+            cars.splice(index,1);
+            console.log(cars);
+            localStorage.setItem("coches", JSON.stringify(cars));
         });
 
         let editbtn = document.querySelector("#editbtn");
