@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles - Pokeweb</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="main-container">
+        <header class="pokedex-header">
+            <div class="camera-lens"></div>
+            <h1 style="text-align: left; margin-left: 20px;">POKEWEB</h1>
+            <button onclick="window.history.back()" style="margin-left: auto;">◀ VOLVER</button>
+        </header>
+
+        <main class="screen-container" id="contenido-detalle">
+            <div style="display: flex; justify-content: space-between; align-items: baseline; border-bottom: 2px solid #ccc; padding-bottom: 10px; margin-bottom: 20px;">
+                <h2 id="nombre-pk" style="margin:0; font-size: 2.5rem; color:#333; text-transform: uppercase;">Cargando...</h2>
+                <span id="id-pk" style="font-size: 1.5rem; color:#666; font-weight: bold;">#000</span>
+            </div>
+
+            <div class="detalle-grid">
+                
+                <div class="col-left">
+                    <div class="main-img-box">
+                        <img id="img-pk" src="" alt="Sprite" style="opacity: 0; transition: opacity 0.3s;">
+                    </div>
+                    <button id="btn-shiny" class="btn-shiny">✨ Ver Shiny</button>
+                    
+                    <div id="gallery-pk" style="margin-top:20px; display:flex; gap:10px; justify-content:center;"></div>
+                </div>
+
+                <div class="col-right">
+                    <p id="desc-text" class="data-card" style="font-style: italic; border-left: 4px solid #DC0A2D;">
+                        Leyendo base de datos...
+                    </p>
+
+                    <div id="tipos-pk" style="margin-bottom: 15px;"></div>
+
+                    <div class="data-card" style="display:flex; justify-content:space-around;">
+                        <div><small>ALTURA</small><br><strong id="altura-pk"></strong></div>
+                        <div><small>PESO</small><br><strong id="peso-pk"></strong></div>
+                    </div>
+
+                    <div class="data-card">
+                        <h4 style="margin:0 0 10px 0;">Estadísticas</h4>
+                        <div id="stats-pk"></div>
+                    </div>
+
+                    <div class="data-card">
+                        <h4 style="margin:0 0 10px 0;">Debilidades (x2 Daño)</h4>
+                        <div id="weakness-pk" style="display: flex; flex-wrap: wrap; gap: 5px;">
+                            Cargando...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // LÓGICA DE DETALLE
+        document.addEventListener('DOMContentLoaded', async () => {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+    if(!id) window.location.href = 'index.html';
+
+    try {
+        // 1. Pedimos datos básicos y especie
+        const [pkRes, spRes] = await Promise.all([
+            fetch(`https://pokeapi.co/api/v2/pokemon/${id}`),
+            fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`)
+        ]);
+        const pk = await pkRes.json();
+        const sp = await spRes.json();
+
+        // --- NUEVO: LÓGICA DE DEBILIDADES ---
+        // Cogemos la URL del primer tipo (ej: Fuego) para ver sus relaciones
+        const typeUrl = pk.types[0].type.url;
+        const typeRes = await fetch(typeUrl);
+        const typeData = await typeRes.json();
+        
+        // Sacamos de quién recibe doble daño (double_damage_from)
+        const debilidades = typeData.damage_relations.double_damage_from;
+        const divWeak = document.getElementById('weakness-pk');
+        divWeak.innerHTML = ''; // Limpiar "Cargando..."
+        
+        const typeColors = { fire: '#F57D31', water: '#6493EB', grass: '#74CB48', electric: '#F9CF30', bug: '#A7B723', normal: '#AAA67F', poison: '#A43E9E', ground: '#DEC16B', fairy: '#E69EAC', fighting: '#C12239', psychic: '#FB5584', rock: '#B69E31', ghost: '#70559B', ice: '#9AD6DF', dragon: '#7037FF', steel: '#B8B8D0', dark: '#705746', flying: '#A98FF3' };
+
+        if(debilidades.length === 0) {
+            divWeak.innerHTML = '<small>Sin debilidades extremas</small>';
+        } else {
+            debilidades.forEach(d => {
+                const color = typeColors[d.name] || '#666';
+                divWeak.innerHTML += `<span class="type-badge" style="background:${color}; font-size: 0.8rem;">${d.name}</span>`;
+            });
+        }
+        // --- FIN NUEVO ---
+
+        // (El resto de tu código de imágenes, textos y stats sigue igual aquí abajo...)
+        // IMÁGENES
+        const imgBox = document.getElementById('img-pk');
+        const btnShiny = document.getElementById('btn-shiny');
+        const normal = pk.sprites.other['official-artwork'].front_default || pk.sprites.front_default;
+        const shiny = pk.sprites.other['official-artwork'].front_shiny || pk.sprites.front_shiny;
+        let isShiny = false;
+
+        imgBox.src = normal;
+        imgBox.onload = () => imgBox.style.opacity = 1;
+
+        btnShiny.onclick = () => {
+            isShiny = !isShiny;
+            imgBox.style.opacity = 0;
+            setTimeout(() => {
+                imgBox.src = isShiny ? shiny : normal;
+                btnShiny.innerText = isShiny ? "↩ Ver Normal" : "✨ Ver Shiny";
+            }, 200);
+        };
+
+        // TEXTOS BÁSICOS
+        document.getElementById('nombre-pk').innerText = pk.name;
+        document.getElementById('id-pk').innerText = `#${pk.id}`;
+        document.getElementById('altura-pk').innerText = pk.height/10 + ' m';
+        document.getElementById('peso-pk').innerText = pk.weight/10 + ' kg';
+
+        const desc = sp.flavor_text_entries.find(e => e.language.name === 'es');
+        document.getElementById('desc-text').innerText = desc ? desc.flavor_text.replace(/\f/g, ' ') : "Sin datos en español.";
+
+        // TIPOS
+        pk.types.forEach(t => {
+            const color = typeColors[t.type.name] || '#666';
+            document.getElementById('tipos-pk').innerHTML += 
+                `<span class="type-badge" style="background:${color}">${t.type.name}</span>`;
+        });
+
+        // STATS
+        pk.stats.forEach(s => {
+            document.getElementById('stats-pk').innerHTML += `
+                <div style="display:flex; align-items:center; margin-bottom:5px;">
+                    <span style="width:100px; font-size:0.8rem; font-weight:bold; text-transform:uppercase;">${s.stat.name}</span>
+                    <div style="flex:1; height:8px; background:#eee; border-radius:4px; overflow:hidden;">
+                        <div style="height:100%; width:${Math.min(s.base_stat, 100)}%; background:#2AA9D9;"></div>
+                    </div>
+                    <strong style="margin-left:10px;">${s.base_stat}</strong>
+                </div>
+            `;
+        });
+
+    } catch (e) { console.error(e); }
+});
+    </script>
+</body>
+</html>

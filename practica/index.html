@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokeweb</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="main-container" id="pokedexContainer">
+        
+        <header class="pokedex-header">
+            <div class="camera-lens"></div>
+            
+            <select id="regionSelect">
+                <option value="all" selected>Nacional (Todos)</option>
+                <option value="kanto">Kanto (Gen 1)</option>
+                <option value="johto">Johto (Gen 2)</option>
+                <option value="hoenn">Hoenn (Gen 3)</option>
+                <option value="sinnoh">Sinnoh (Gen 4)</option>
+                <option value="unova">Unova (Gen 5)</option>
+                <option value="kalos">Kalos (Gen 6)</option>
+                <option value="alola">Alola (Gen 7)</option>
+                <option value="galar">Galar (Gen 8)</option>
+                <option value="paldea">Paldea (Gen 9)</option>
+            </select>
+            <h1>POKEWEB</h1>
+        </header>
+
+        <main class="screen-container">
+            <div class="search-box">
+                <input type="text" id="pokeInput" placeholder="🔍 Buscar en esta región...">
+            </div>
+
+            <div id="grid-pokemon" class="grid-container">
+                </div>
+
+            <nav class="pagination">
+                <button id="btnPrev">Anterior</button>
+                <span id="paginaActual" style="font-weight: bold; color: #333;">1</span>
+                <button id="btnNext">Siguiente</button>
+            </nav>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
