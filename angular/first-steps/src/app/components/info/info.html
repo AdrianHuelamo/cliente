@@ -1,1 +1,26 @@
-<p>info works!</p>
+<div class="content" *ngIf="dataApi">
+    <div class="header"><h1>Rick & Morty Character List</h1>
+    Character Name: <input type="text" [(ngModel)]="charName">
+    <button (click)="filterByName()">Filter by name</button>
+
+</div>
+    <div class="card" *ngFor="let char of characters; index as i">
+        <div class="card-header">
+            <h3>{{char.name}}</h3>
+        </div>
+        <img [src]="char.image" [title]="char.name">
+        <p><b>Gender:</b>{{char.gender}}</p>
+        <p><b>Species:</b>{{char.species}}</p>
+        <p><b>Status:</b>{{char.status}}</p>
+        <p><b>Origin:</b>{{char.origin.name}}</p>
+
+        <button (click)="toggleAccordion(i)">Episodes</button>
+
+        <div *ngIf="activeIndex === i" class="accordion-content">
+            <ul>
+                <li *ngFor="let episode of char.episode"><a [href]="episode">Episode {{episode.split('/').pop()}}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

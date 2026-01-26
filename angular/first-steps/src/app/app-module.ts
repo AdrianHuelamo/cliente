@@ -9,6 +9,10 @@ import { Footer } from './components/footer/footer';
 import { Home } from './components/home/home';
 import { Info } from './components/info/info';
 import { Navbar } from './components/navbar/navbar';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+
+
 
 @NgModule({
   declarations: [
@@ -18,11 +22,13 @@ import { Navbar } from './components/navbar/navbar';
     Footer,
     Home,
     Info,
-    Navbar
+    Navbar,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule
   ],
   providers: [
     provideBrowserGlobalErrorListeners()
