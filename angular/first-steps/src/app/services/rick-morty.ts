@@ -13,8 +13,8 @@ export class RickMorty {
    
   }
 
-  getCharacters(): Observable<infoApiRM>{
-    return this.http.get<infoApiRM>(this.URI);
+  getCharacters(page: number = 1): Observable<infoApiRM>{
+    return this.http.get<infoApiRM>(`${this.URI}?page=${page}`);
   }
 
 

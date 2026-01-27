@@ -9,14 +9,13 @@ import { CharacterRM, infoApiRM } from '../../common/rminterface';
   styleUrl: './info.css',
 })
 export class Info implements OnInit {
-filterByName() {
-throw new Error('Method not implemented.');
-}
-
   dataApi!: infoApiRM
   characters: CharacterRM[] = [];
   activeIndex: number | null = null;
-  charName: string; = "";
+  charName: string = "";
+  currentPage: number = 1;
+  totalPages: number = 0;
+  pageToGo: number = 1;
 
   // "Objeto" que nos da opcion a usar metodos del servicio RickMorty
   constructor(private rmservice: RickMorty) {
@@ -28,10 +27,11 @@ throw new Error('Method not implemented.');
 
   // Funcion que llama a getCharacters,del servido rmservice
   private loadCharacters(): void {
-    this.rmservice.getCharacters().subscribe({
+    this.rmservice.getCharacters(this.currentPage).subscribe({
       next:(value) => {
         this.dataApi = value;
         this.characters = this.dataApi.results;
+        this.totalPages = this.dataApi.info.pages;
       },
       error:(err) => { 
         console.error(err);
@@ -41,7 +41,46 @@ throw new Error('Method not implemented.');
       },
     })
   }
+
   toggleAccordion(index:number) {
     this.activeIndex = this.activeIndex === index ? null : index;
+  }
+
+  filterByName() {
+    this.characters = this.characters.filter(char => char.name.toLocaleLowerCase().includes(this.charName.toLocaleLowerCase()));
+  }
+
+  resetFilter() {
+    this.loadCharacters();
+    this.charName = "";
+  }
+
+  orderByOrigin() {
+    this.characters.sort((a,b) => {
+      if (a.origin.name.toLocaleLowerCase() > b.origin.name.toLocaleLowerCase()) return 1;
+      else if (a.origin.name.toLocaleLowerCase() < b.origin.name.toLocaleLowerCase()) return -1;
+      else return 0;
+    });
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.loadCharacters();
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.loadCharacters();
+    }
+  }
+
+  goToPage(page: number) {
+    if (page < this.totalPages && page >= 1) {
+      this.currentPage = page;
+      this.loadCharacters;
+    }
   }
 }
