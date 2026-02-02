@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokeweb</title>
+    <title>Pokeweb - Base de Datos Nacional</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png">
 </head>
 <body>
 
@@ -12,7 +13,12 @@
         
         <header class="pokedex-header">
             <div class="camera-lens"></div>
-            
+            <div class="small-lights">
+                <div class="light red-light"></div>
+                <div class="light yellow-light"></div>
+                <div class="light green-light"></div>
+            </div>
+
             <select id="regionSelect">
                 <option value="all" selected>Nacional (Todos)</option>
                 <option value="kanto">Kanto (Gen 1)</option>
@@ -25,22 +31,26 @@
                 <option value="galar">Galar (Gen 8)</option>
                 <option value="paldea">Paldea (Gen 9)</option>
             </select>
+
             <h1>POKEWEB</h1>
         </header>
 
         <main class="screen-container">
+            
             <div class="search-box">
-                <input type="text" id="pokeInput" placeholder="🔍 Buscar en esta región...">
+                <input type="text" id="pokeInput" placeholder="🔍 Buscar Pokémon...">
             </div>
 
             <div id="grid-pokemon" class="grid-container">
-                </div>
+                <div class="loading-msg">Cargando base de datos...</div>
+            </div>
 
             <nav class="pagination">
                 <button id="btnPrev">Anterior</button>
-                <span id="paginaActual" style="font-weight: bold; color: #333;">1</span>
+                <span id="paginaActual">1</span>
                 <button id="btnNext">Siguiente</button>
             </nav>
+
         </main>
     </div>
 

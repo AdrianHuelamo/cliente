@@ -1,6 +1,6 @@
-export type Root = Root2[]
+export type InfoFinalspace = Data[]
 
-export interface Root2 {
+export interface Data {
   id: number
   name: string
   status: string

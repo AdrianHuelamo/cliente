@@ -1,1 +1,31 @@
-<p>final-space works!</p>
+<div class="content" *ngIf="dataApi">
+    <div id="header">
+        <h1>Valorant Character List</h1>
+        <div class="pagination">
+            <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
+            <span>Page {{currentPage}} / {{totalPages}}</span>
+            <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button><br>
+            Go to: <input type="number" [(ngModel)]="pageToGo"><button (click)="goToPage(pageToGo)">Go To: </button>
+        </div>
+        Agent Name: <input type="text" [(ngModel)]="charName">
+        <button (click)="filterByName()">Filter by name</button>
+        <button (click)="resetFilter()">Reset Filter</button>
+        <button (click)="orderByName()">Order By Name</button>
+    </div>
+
+    <div class="card" *ngFor="let char of characters; index as i">
+        <div class="card-header">
+            <h3>{{char.name}}</h3>
+        </div>
+        <img [src]="char.img_url" [title]="char.name">
+
+        <button (click)="toggleAccordion(i)">abilities</button>
+
+        <div *ngIf="activeIndex === i" class="accordion-content">
+            <ul>
+                <li *ngFor="let abilities of char.abilities"><a [href]="abilities">Abilities {{abilities}}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

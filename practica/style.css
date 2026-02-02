@@ -9,10 +9,14 @@
 }
 
 /* --- TEMAS DE REGIONES --- */
-.theme-johto { --main-color: #D4AF37; --dark-color: #A67B00; } /* Dorado */
-.theme-hoenn { --main-color: #4DAD5B; --dark-color: #1E6028; } /* Verde Esmeralda */
-.theme-sinnoh { --main-color: #C08A53; --dark-color: #8A5A2A; } /* Perla/Diamante */
-.theme-unova { --main-color: #333333; --dark-color: #000000; } /* Blanco/Negro */
+.theme-johto { --main-color: #D4AF37; --dark-color: #A67B00; }
+.theme-hoenn { --main-color: #4DAD5B; --dark-color: #1E6028; }
+.theme-sinnoh { --main-color: #C08A53; --dark-color: #8A5A2A; }
+.theme-unova { --main-color: #333333; --dark-color: #000000; }
+.theme-kalos { --main-color: #0079C0; --dark-color: #004D7A; }
+.theme-alola { --main-color: #FF9900; --dark-color: #CC7A00; }
+.theme-galar { --main-color: #E6005C; --dark-color: #99003D; }
+.theme-paldea { --main-color: #7A00CC; --dark-color: #4C0080; }
 
 body {
     font-family: 'Outfit', sans-serif;
@@ -27,13 +31,14 @@ body {
 
 /* Estructura Carcasa */
 .main-container {
-    background-color: var(--main-color); /* Usamos la variable dinámica */
+    background-color: var(--main-color);
     width: 100%;
-    max-width: 1000px; /* Un poco más ancho */
+    max-width: 1000px;
     border-radius: 20px;
     box-shadow: -10px 10px 30px rgba(0,0,0,0.5), inset 5px 5px 15px rgba(255,255,255,0.2);
     padding: 20px;
-    transition: background-color 0.5s ease; /* Transición suave de color */
+    transition: background-color 0.5s ease;
+    position: relative;
 }
 
 /* Cabecera */
@@ -54,30 +59,23 @@ body {
     margin-right: 20px;
 }
 
-/* Título */
+.small-lights { display: flex; gap: 10px; margin-right: 20px; }
+.light { width: 12px; height: 12px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.2); }
+.red-light { background: #FF5555; }
+.yellow-light { background: #FFCE4B; }
+.green-light { background: #44C85B; }
+
 h1 {
-    color: white;
-    font-weight: 700;
-    text-shadow: 2px 2px 0px rgba(0,0,0,0.2);
-    margin: 0; /* Quitamos auto margen para usar flex */
-    font-size: 2rem;
-    letter-spacing: 2px;
-    flex-grow: 1; /* Ocupa el espacio */
-    text-align: right;
+    color: white; font-weight: 700; margin: 0;
+    font-size: 2rem; letter-spacing: 2px;
+    flex-grow: 1; text-align: right;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.2);
 }
 
-/* Selector de Región (Estilo Botón Retro) */
 #regionSelect {
-    margin-left: 20px;
-    padding: 10px;
-    border-radius: 5px;
-    background: #333;
-    color: white;
-    border: none;
-    font-family: 'Outfit', sans-serif;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: inset 2px 2px 5px rgba(0,0,0,0.5);
+    padding: 10px; border-radius: 5px; background: #333;
+    color: white; border: none; font-family: 'Outfit', sans-serif;
+    font-weight: bold; cursor: pointer; box-shadow: inset 2px 2px 5px rgba(0,0,0,0.5);
 }
 
 /* Pantalla */
@@ -92,82 +90,140 @@ h1 {
 
 /* Buscador */
 .search-box input {
-    width: 100%;
-    padding: 15px;
-    border-radius: 10px;
-    border: 2px solid #ccc;
-    font-size: 1.1rem;
-    box-sizing: border-box;
-    outline: none;
+    width: 100%; padding: 15px; border-radius: 10px;
+    border: 2px solid #ccc; font-size: 1.1rem;
+    box-sizing: border-box; outline: none;
+    font-family: 'Outfit', sans-serif;
 }
 
-/* --- GRID (TARJETAS MÁS GRANDES) --- */
+/* Grid */
 .grid-container {
     display: grid;
-    /* AUMENTADO A 200px (antes 140px) */
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 15px;
     margin-top: 20px;
 }
 
 .poke-card {
-    background: white;
-    border-radius: 15px;
-    padding: 20px; /* Más padding interno */
-    text-align: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    cursor: pointer;
-    transition: transform 0.2s;
-    border: 1px solid transparent;
+    background: white; border-radius: 15px; padding: 15px;
+    text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    cursor: pointer; transition: transform 0.2s, border-color 0.2s;
+    border: 2px solid transparent;
 }
 .poke-card:hover { transform: translateY(-5px); border-color: var(--ui-blue); }
-.poke-card img { width: 120px; height: 120px; } /* Imagen más grande */
-.poke-card h3 { font-size: 1.3rem; margin: 10px 0; text-transform: capitalize; }
+.poke-card img { width: 100px; height: 100px; object-fit: contain; }
+.poke-card h3 { font-size: 1.1rem; margin: 10px 0; text-transform: capitalize; }
+.poke-card small { color: #888; background: #f0f0f0; padding: 2px 8px; border-radius: 10px; }
 
-/* Botones Paginación */
-.pagination { margin-top: 20px; display: flex; justify-content: center; gap: 20px; }
+/* Paginación */
+.pagination { margin-top: 20px; display: flex; justify-content: center; gap: 20px; align-items: center; }
 button {
     background-color: #333; color: white; border: none;
-    padding: 12px 25px; border-radius: 5px; cursor: pointer;
-    box-shadow: 0 4px 0 #000; font-weight: bold;
+    padding: 10px 20px; border-radius: 5px; cursor: pointer;
+    font-weight: bold; font-family: 'Outfit', sans-serif;
+    box-shadow: 0 4px 0 #000;
 }
 button:active { transform: translateY(4px); box-shadow: none; }
-button:disabled { background-color: #777; box-shadow: none; opacity: 0.7; }
+button:disabled { background: #777; box-shadow: none; opacity: 0.7; transform: translateY(4px); }
 
-/* --- ESTILOS DETALLE (ARREGLADOS) --- */
-.detalle-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Dos columnas iguales */
-    gap: 30px;
-    margin-top: 20px;
+/* --- ESTILOS DETALLE --- */
+.detail-header {
+    display: flex; justify-content: space-between; align-items: baseline;
+    border-bottom: 2px solid #ccc; padding-bottom: 10px; margin-bottom: 20px;
 }
+.detail-header h2 { margin: 0; font-size: 2.5rem; color: #333; text-transform: uppercase; }
+.detail-header span { font-size: 1.5rem; color: #666; font-weight: bold; }
+
+.detalle-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
 @media(max-width: 768px) { .detalle-grid { grid-template-columns: 1fr; } }
 
 .main-img-box {
-    background: white; border-radius: 20px; padding: 30px;
-    text-align: center; border: 2px solid #eee;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    background: white; border-radius: 20px; padding: 20px;
+    text-align: center; border: 2px solid #eee; position: relative;
+    min-height: 250px; display: flex; align-items: center; justify-content: center;
 }
-.main-img-box img { width: 100%; max-width: 300px; }
+.main-img-box img { width: 100%; max-width: 300px; transition: opacity 0.3s; }
 
 .btn-shiny {
     background: linear-gradient(45deg, #FFD700, #ffec8b);
-    color: #333; border: none; width: 100%; margin-top: 15px;
+    color: #333; width: 100%; margin-top: 15px;
+    text-shadow: none; border: 1px solid #e6c200;
 }
+.btn-back { margin-left: auto; z-index: 10; }
+
+.audio-box { margin-top: 15px; text-align: center; }
+.audio-box audio { width: 100%; height: 30px; }
 
 .data-card {
     background: white; padding: 15px; border-radius: 10px;
     margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
+.card-title { margin: 0 0 10px 0; border-bottom: 1px solid #eee; padding-bottom: 5px; color: #555; }
 
+.desc-box {
+    font-style: italic; background: #fff; padding: 15px;
+    border-radius: 5px; border-left: 5px solid var(--main-color);
+    margin-top: 0;
+}
+
+.types-row { margin-bottom: 20px; }
 .type-badge {
     padding: 5px 15px; border-radius: 20px; color: white;
     font-weight: bold; margin-right: 5px; display: inline-block;
+    text-transform: capitalize; font-size: 0.9rem;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.2);
+}
+
+.flex-row { display: flex; }
+.half-col { flex: 1; text-align: center; }
+.border-left { border-left: 1px solid #eee; }
+
+/* Barras de Stats */
+.stat-row { display: flex; align-items: center; margin-bottom: 6px; }
+.stat-name { width: 100px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; color: #666; }
+.bar-container { flex: 1; height: 8px; background: #eee; border-radius: 4px; overflow: hidden; }
+.bar-fill { height: 100%; background: var(--ui-blue); border-radius: 4px; }
+.stat-num { margin-left: 10px; width: 30px; text-align: right; }
+
+/* Evoluciones y Debilidades */
+.evo-box { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; align-items: center; }
+.evo-item { text-align: center; cursor: pointer; transition: transform 0.2s; }
+.evo-item:hover { transform: scale(1.1); }
+.evo-arrow { color: #888; font-weight: bold; font-size: 1.2rem; }
+
+.weakness-box { display: flex; flex-wrap: wrap; gap: 5px; }
+
+/* Utilidades */
+.mt-15 { margin-top: 15px; }
+.loading-msg { width: 100%; text-align: center; padding: 20px; font-size: 1.2rem; color: #666; }
+
+/* --- Estilos para los requisitos de evolución --- */
+
+/* Contenedor de la flecha y el texto */
+.evo-arrow-container {
+    display: flex;
+    flex-direction: column; /* Uno encima del otro */
+    align-items: center;
+    justify-content: center;
+    margin: 0 5px;
+}
+
+/* El texto del requisito (Nvl 16, Piedra...) */
+.evo-req {
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: #555;
+    background-color: #f0f0f0;
+    padding: 2px 6px;
+    border-radius: 10px;
+    margin-bottom: -5px; /* Pegarlo un poco a la flecha */
+    white-space: nowrap; /* Que no ocupe dos líneas */
     text-transform: capitalize;
 }
 
-/* Añade esto a tus temas existentes */
-.theme-kalos { --main-color: #0079C0; --dark-color: #004D7A; } /* Azul (X/Y) */
-.theme-alola { --main-color: #FF9900; --dark-color: #CC7A00; } /* Naranja (Sol) */
-.theme-galar { --main-color: #E6005C; --dark-color: #99003D; } /* Magenta (Escudo) */
-.theme-paldea { --main-color: #7A00CC; --dark-color: #4C0080; } /* Púrpura */
+/* La flecha */
+.evo-arrow {
+    color: #888;
+    font-weight: bold;
+    font-size: 1.5rem;
+}

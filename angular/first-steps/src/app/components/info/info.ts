@@ -80,7 +80,7 @@ export class Info implements OnInit {
   goToPage(page: number) {
     if (page < this.totalPages && page >= 1) {
       this.currentPage = page;
-      this.loadCharacters;
+      this.loadCharacters();
     }
   }
 }
