@@ -3,6 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { Error } from './components/error/error';
 import { Home } from './components/home/home';
 import { Info } from './components/info/info';
+import { Disney } from './components/disney/disney';
+import { Valorant } from './components/valorant/valorant';
+import { FinalSpace } from './components/final-space/final-space';
 
 
 const routes: Routes = [
@@ -13,6 +16,18 @@ const routes: Routes = [
   {
     path: 'info',
     component: Info
+  },
+  {
+    path: 'disney',
+    component: Disney
+  },
+  {
+    path: 'valorant',
+    component: Valorant
+  },
+  {
+    path: 'final-space',
+    component: FinalSpace
   },
   { 
     path: '', 

@@ -11,6 +11,9 @@ import { Info } from './components/info/info';
 import { Navbar } from './components/navbar/navbar';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { Disney } from './components/disney/disney';
+import { Valorant } from './components/valorant/valorant';
+import { FinalSpace } from './components/final-space/final-space';
 
 
 
@@ -23,6 +26,9 @@ import { FormsModule } from '@angular/forms';
     Home,
     Info,
     Navbar,
+    Disney,
+    Valorant,
+    FinalSpace,
   ],
   imports: [
     BrowserModule,
