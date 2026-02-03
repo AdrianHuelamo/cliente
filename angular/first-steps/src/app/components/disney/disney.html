@@ -21,16 +21,16 @@
             <h3>{{char.name}}</h3>
         </div>
         <img [src]="char.imageUrl" [title]="char.name">
-        <p><b>Films:</b>{{char.films}}</p>
-        <p><b>TV Shows:</b>{{char.tvShows}}</p>
+        <p><b>Films: </b>{{char.films. length}}</p>
+        <p><b>TV Shows: </b>{{char.tvShows.length}}</p>
 
         <button (click)="toggleAccordion(i)">Films</button>
 
         <div *ngIf="activeIndex === i" class="accordion-content">
             <ul>
-                <li *ngFor="let film of char.films"><a [href]="film">Films {{film.split('/').pop()}}</a>
+                <li *ngFor="let film of char.films"><span>{{film.split('/').pop()}}</span>
                 </li>
             </ul>
         </div>
-    </div>
+        </div>
 </div>

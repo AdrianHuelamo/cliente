@@ -10,10 +10,11 @@
             <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button><br>
             Go to: <input type="number" [(ngModel)]="pageToGo"><button (click)="goToPage(pageToGo)">Go To: </button>
         </div>
-        Agent Name: <input type="text" [(ngModel)]="charName">
-        <button (click)="filterByName()">Filter by name</button>
+        <!-- Agent Name: <input type="text" [(ngModel)]="charName">
+        <button (click)="filterByName()">Filter by name</button> -->
+        Agent Name: <input type="text" [(ngModel)]="charName" (ngModelChange)="filterByName()">
         <button (click)="resetFilter()">Reset Filter</button>
-        <button (click)="orderByName()">Order By Name</button>
+        <button (click)="toggleSort()">Order By Name</button>
     </div>
 
     <div class="card" *ngFor="let char of characters; index as i">
@@ -26,7 +27,7 @@
 
         <div *ngIf="activeIndex === i" class="accordion-content">
             <ul>
-                <li *ngFor="let abilities of char.abilities"><a [href]="abilities">Abilities {{abilities.displayName.split('/').pop()}}</a>
+                <li *ngFor="let abilities of char.abilities"><span>{{abilities.displayName.split('/').pop()}}</span>
                 </li>
             </ul>
         </div>

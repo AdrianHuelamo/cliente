@@ -26,7 +26,7 @@
 
         <div *ngIf="activeIndex === i" class="accordion-content">
             <ul>
-                <li *ngFor="let abilities of char.abilities"><a [href]="abilities">Abilities {{abilities}}</a>
+                <li *ngFor="let abilities of char.abilities"><span>{{abilities}}</span>
                 </li>
             </ul>
         </div>
