@@ -1,4 +1,7 @@
-<div class="content" *ngIf="dataApi">
+<div *ngIf="loading" style="text-align: center; padding: 20px;">
+    <h2>Loading...</h2>
+</div>
+<div class="content" *ngIf="!loading && dataApi">
     <div id="header">
         <h1>Valorant Character List</h1>
         <div class="pagination">

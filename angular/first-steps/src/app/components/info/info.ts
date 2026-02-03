@@ -13,6 +13,7 @@ export class Info implements OnInit {
   characters: CharacterRM[] = [];
   activeIndex: number | null = null;
   charName: string = "";
+  loading: boolean = false;
   currentPage: number = 1;
   totalPages: number = 0;
   pageToGo: number = 1;
@@ -27,14 +28,17 @@ export class Info implements OnInit {
 
   // Funcion que llama a getCharacters,del servido rmservice
   private loadCharacters(): void {
+    this.loading = true;
     this.rmservice.getCharacters(this.currentPage).subscribe({
       next:(value) => {
         this.dataApi = value;
         this.characters = this.dataApi.results;
         this.totalPages = this.dataApi.info.pages;
+        this.loading = false;
       },
       error:(err) => { 
         console.error(err);
+        this.loading = false;
       },
       complete: () => { 
         console.log("Done");       

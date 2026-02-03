@@ -13,6 +13,7 @@ export class Disney implements OnInit {
   characters: Daum[] = [];
   activeIndex: number | null = null;
   charName: string = '';
+  loading: boolean = false;
   currentPage: number = 1;
   totalPages: number = 0;
   pageToGo: number = 1;
@@ -25,14 +26,18 @@ export class Disney implements OnInit {
   }
   
   private loadCharacters(): void {
+    this.loading = true;
     this.Disneyservices.getCharacters(this.currentPage).subscribe({
       next:(value) => {
         this.dataApi = value;
         this.characters = this.dataApi.data;
         this.totalPages = this.dataApi.info.totalPages;
+        this.loading = false;
+
       },
       error:(err) => { 
         console.error(err);
+        this.loading = false;
       },
       complete: () => { 
         console.log("Done");       

@@ -13,6 +13,7 @@ export class Valorant implements OnInit {
   characters: Daum[] = [];
   activeIndex: number | null = null;
   charName: string = '';
+  loading: boolean = false;
   elementsPP: number = 10;
   currentPage: number = 1;
   totalPages: number = 0;
@@ -29,15 +30,18 @@ export class Valorant implements OnInit {
   }
 
   private loadCharacters(): void {
+    this.loading = true;
     this.valorantservices.getCharacters().subscribe({
       next:(value) => {
         this.dataApi = value;
         this.allCharacteres = this.dataApi.data;
         this.totalPages =  Math.ceil( this.allCharacteres.length / this.elementsPP);
         this.pagination();
+        this.loading = false;
       },
       error:(err) => { 
         console.error(err);
+        this.loading = false;
       },
       complete: () => { 
         console.log("Done");       

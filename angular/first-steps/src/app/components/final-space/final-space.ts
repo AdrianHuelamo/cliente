@@ -14,6 +14,7 @@ export class FinalSpace implements OnInit {
   characters: Data[] = [];
   activeIndex: number | null = null;
   charName: string = '';
+  loading: boolean = false;
   elementsPP: number = 10;
   currentPage: number = 1;
   totalPages: number = 0;
@@ -30,15 +31,18 @@ export class FinalSpace implements OnInit {
   }
 
   private loadCharacters(): void {
+    this.loading = true;
     this.finalspaceservices.getCharacters().subscribe({
       next:(value) => {
         this.dataApi = value;
         this.allCharacteres = value;
         this.totalPages =  Math.ceil( this.allCharacteres.length / this.elementsPP);
         this.pagination();
+        this.loading = false;
       },
       error:(err) => { 
         console.error(err);
+        this.loading = false;
       },
       complete: () => { 
         console.log("Done");       
