@@ -18,15 +18,12 @@ export class Info implements OnInit {
   totalPages: number = 0;
   pageToGo: number = 1;
 
-  // "Objeto" que nos da opcion a usar metodos del servicio RickMorty
   constructor(private rmservice: RickMorty) {
   }
-  // Cuando se inicie 
   ngOnInit(): void {
     this.loadCharacters()
   }
 
-  // Funcion que llama a getCharacters,del servido rmservice
   private loadCharacters(): void {
     this.loading = true;
     this.rmservice.getCharacters(this.currentPage).subscribe({

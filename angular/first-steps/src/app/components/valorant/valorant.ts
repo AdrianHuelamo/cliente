@@ -68,13 +68,6 @@ export class Valorant implements OnInit {
     this.activeIndex = this.activeIndex === index ? null : index;
   }
 
-  //filterByName() {
-  //  this.filteredCharacters = this.allCharacteres.filter(char => char.displayName.toLocaleLowerCase().includes(this.charName.toLocaleLowerCase())); 
-  //  this.currentPage = 1;
-  //  this.calculateTotalPages();
-  //  this.pagination();
-  //}
-
   applyFilterAndSort() {
     this.filteredCharacters = this.allCharacteres.filter(char => 
         char.displayName.toLocaleLowerCase().includes(this.charName.toLocaleLowerCase())
@@ -104,7 +97,6 @@ export class Valorant implements OnInit {
         this.sortState = 0; 
     }
 
-    // Aplicamos los cambios
     this.applyFilterAndSort();
   }
 
@@ -119,15 +111,6 @@ export class Valorant implements OnInit {
     this.currentPage = 1;
     this.pagination();
   }
-
-  //orderByName() {
-  //  this.filteredCharacters.sort((a,b) => {
-  //    if (a.displayName.toLocaleLowerCase() > b.displayName.toLocaleLowerCase()) return 1;
-  //    else if (a.displayName.toLocaleLowerCase() < b.displayName.toLocaleLowerCase()) return -1;
-  //    else return 0;
-  //  });
-  //  this.pagination();
-  //}
 
   nextPage() {
     if (this.currentPage < this.totalPages) {

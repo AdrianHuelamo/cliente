@@ -1,0 +1,32 @@
+<div class="content" *ngIf="dataApi">
+    <div id="header">
+        <h1>La mejor serie de la historia Character List</h1>
+        <div class="pagination">
+            <button (click)="firstPage()" [disabled]="currentPage === 1">First Page</button>
+            <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
+            <span>Page {{currentPage}} / {{totalPages}}</span>
+            <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+            <button (click)="lastPage()" [disabled]="currentPage === totalPages">Last Page</button><br><br>
+            Go to: <input type="number" [(ngModel)]="pageToGo"><button (click)="goToPage(pageToGo)">Go To: </button><br><br>
+            New limit: <input type="number" [(ngModel)]="limit"><button (click)="limitpp(limit)">limit </button><br><br>
+        </div>
+
+        Character Race: <input type="fields" [(ngModel)]="race">
+        <button (click)="filterByRace()">Filter by Race</button>
+        <button (click)="resetFilter()">Reset Filter</button>
+        <button (click)="toggleSort()">Order By Name</button><br>
+    </div>
+
+    <div class="card" *ngFor="let char of characters; index as i">
+        <div class="card-header">
+            <h3>{{char.name}}</h3>
+        </div>
+        <img [src]="char.image" [title]="char.name">
+        <p><b>Race: </b>{{char.race}}</p>
+        <p><b>ki: </b>{{char.ki}} / <b>Max Ki: </b>{{char.maxKi}}</p>
+        <div *ngIf="activeIndex === i" class="accordion-content">
+            <p><b>affiliation: </b>{{char.affiliation}}</p>
+            <p><b>Gender: </b>{{char.gender}}</p>          
+        </div>
+    </div>
+</div>

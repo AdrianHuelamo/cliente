@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { Disney } from './components/disney/disney';
 import { Valorant } from './components/valorant/valorant';
 import { FinalSpace } from './components/final-space/final-space';
+import { Dragonball } from './components/dragonball/dragonball';
 
 
 
@@ -29,6 +30,7 @@ import { FinalSpace } from './components/final-space/final-space';
     Disney,
     Valorant,
     FinalSpace,
+    Dragonball,
   ],
   imports: [
     BrowserModule,

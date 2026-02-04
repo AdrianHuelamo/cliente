@@ -6,6 +6,7 @@ import { Info } from './components/info/info';
 import { Disney } from './components/disney/disney';
 import { Valorant } from './components/valorant/valorant';
 import { FinalSpace } from './components/final-space/final-space';
+import { Dragonball } from './components/dragonball/dragonball';
 
 
 const routes: Routes = [
@@ -28,6 +29,10 @@ const routes: Routes = [
   {
     path: 'final-space',
     component: FinalSpace
+  },
+  {
+    path: 'dragonball',
+    component: Dragonball
   },
   { 
     path: '', 
