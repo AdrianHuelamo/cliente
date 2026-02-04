@@ -147,7 +147,7 @@ export class Dragonball implements OnInit {
     }
   }
 
-  showinfo() {
+  moreinfo() {
     if (this.moreInfo == true) {
       this.moreInfo = false;
     } else {

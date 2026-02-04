@@ -10,7 +10,6 @@
             Go to: <input type="number" [(ngModel)]="pageToGo"><button (click)="goToPage(pageToGo)">Go To: </button><br><br>
             New limit: <input type="number" [(ngModel)]="limit"><button (click)="limitpp(limit)">limit </button><br><br>
         </div>
-        More Info<input type="checkbox" (click)="showinfo()"><br>
 
         Character Race: <input type="fields" [(ngModel)]="race">
         <button (click)="filterByRace()">Filter by Race</button>
@@ -25,7 +24,7 @@
         <img [src]="char.image" [title]="char.name">
         <p><b>Race: </b>{{char.race}}</p>
         <p><b>ki: </b>{{char.ki}} / <b>Max Ki: </b>{{char.maxKi}}</p>
-        <div *ngIf="moreInfo" class="accordion-content">
+        <div *ngIf="activeIndex === i" class="accordion-content">
             <p><b>affiliation: </b>{{char.affiliation}}</p>
             <p><b>Gender: </b>{{char.gender}}</p>          
         </div>

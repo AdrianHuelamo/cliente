@@ -1,0 +1,36 @@
+<div *ngIf="loading" style="text-align: center; padding: 20px;">
+    <h2>Loading...</h2>
+</div>
+<div class="content" *ngIf="!loading && dataApi">
+    <div id="header">
+        <h1>Disney Character List</h1>
+        <div class="pagination">
+            <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
+            <span>Page {{currentPage}} / {{totalPages}}</span>
+            <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button><br>
+            Go to: <input type="number" [(ngModel)]="pageToGo"><button (click)="goToPage(pageToGo)">Go To: </button>
+        </div>
+        Character Name: <input type="text" [(ngModel)]="charName">
+        <button (click)="filterByName()">Filter by name</button>
+        <button (click)="resetFilter()">Reset Filter</button>
+        <button (click)="orderByName()">Order By Name</button>
+    </div>
+
+    <div class="card" *ngFor="let char of characters; index as i">
+        <div class="card-header">
+            <h3>{{char.name}}</h3>
+        </div>
+        <img [src]="char.imageUrl" [title]="char.name">
+        <p><b>Films: </b>{{char.films. length}}</p>
+        <p><b>TV Shows: </b>{{char.tvShows.length}}</p>
+
+        <button (click)="toggleAccordion(i)">Films</button>
+
+        <div *ngIf="activeIndex === i" class="accordion-content">
+            <ul>
+                <li *ngFor="let film of char.films"><span>{{film.split('/').pop()}}</span>
+                </li>
+            </ul>
+        </div>
+        </div>
+</div>
