@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>TaskMaster Database</title>
+    <script type="text/javascript" src="assets/jquery-3.7.1.js"></script>
+    <script src="exam.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+            background-color: #f5f5f5;
+            color: #111;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        #container {
+            display: flex;
+            align-items: flex-start;
+        }
+
+        #formPanel {
+            width: 190px;
+            border: 2px solid #000;
+            background-color: #fff;
+            margin: 10px;
+            padding: 0;
+            box-sizing: border-box;
+            color: #000;
+        }
+
+        #formHeaderBtn {
+            width: 100%;
+            border: none;
+            border-bottom: 2px solid #000;
+            background-color: #000;
+            color: #fff;
+            padding: 6px 0;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        #formPanel h2 {
+            margin: 8px 0;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        #addTaskForm {
+            padding: 0 6px 8px 6px;
+            font-size: 12px;
+        }
+
+        #addTaskForm label {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        #addTaskForm input,
+        #addTaskForm select {
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #000;
+            padding: 2px 3px;
+            font-size: 11px;
+            margin-bottom: 4px;
+        }
+
+        #addTaskForm button[type="submit"] {
+            width: 100%;
+            border: 1px solid #000;
+            background-color: #f5f5f5;
+            cursor: pointer;
+            padding: 4px 0;
+            font-size: 12px;
+        }
+
+        #mainContent {
+            flex: 1;
+            margin: 10px 30px 30px 10px;
+        }
+
+        #logo {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        #logoCircle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #000;
+            margin: 0 auto 5px auto;
+            position: relative;
+        }
+
+        #logoCircle::after {
+            content: "T";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -55%);
+            color: #e50914;
+            font-weight: bold;
+            font-size: 26px;
+        }
+
+        #title {
+            text-align: center;
+            font-size: 26px;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        #subtitle {
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .sectionTitle {
+            text-align: center;
+            font-size: 20px;
+            margin: 25px 0 10px 0;
+        }
+
+        .cardsRow {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+        }
+
+        .taskCard {
+            width: 180px;
+            background-color: #ffffff;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+            padding: 12px 10px 10px 10px;
+            text-align: center;
+            box-sizing: border-box;
+            transition: transform 0.2s;
+        }
+
+        .taskCard:hover {
+            transform: translateY(-3px);
+        }
+
+        .taskTitle {
+            margin: 6px 0 3px 0;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .taskDesc {
+            margin: 0;
+            font-size: 12px;
+        }
+
+        .taskMeta {
+            margin: 2px 0 8px 0;
+            font-size: 11px;
+        }
+
+        .cardButtons {
+            margin-top: 6px;
+        }
+
+        .cardButtons button {
+            width: 100%;
+            border: 1px solid #000;
+            background-color: #f5f5f5;
+            font-size: 11px;
+            cursor: pointer;
+            padding: 3px 0;
+            margin-top: 4px;
+        }
+
+        /* Dark mode button */
+        #darkModeBtn {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 4px 12px;
+            border: 1px solid #000;
+            background-color: #f5f5f5;
+            font-size: 11px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="darkModeBtn">Dark Mode</button>
+
+    <div id="container">
+        <!-- Sidebar form -->
+        <div id="formPanel">
+            <button id="formHeaderBtn">Show Form</button>
+            <h2>New Task</h2>
+            <form id="addTaskForm">
+                <label>Title
+                    <input type="text" id="taskTitle" required>
+                </label>
+                <label>Description
+                    <input type="text" id="taskDesc">
+                </label>
+                <label>Category
+                    <select id="taskCategory">
+                        <option value="Work">Work</option>
+                        <option value="Personal">Personal</option>
+                        <option value="Study">Study</option>
+                    </select>
+                </label>
+                <label>Date
+                    <input type="date" id="taskDate" required>
+                </label>
+                <button type="submit">Add</button>
+            </form>
+        </div>
+
+        <!-- Main content -->
+        <div id="mainContent">
+            <div id="logo">
+                <div id="logoCircle"></div>
+            </div>
+            <div id="title">TASKMASTER DATABASE</div>
+            <div id="subtitle">Pending & Completed</div>
+
+            <div class="sectionTitle">
+                Pending Tasks (<span id="pendingCount">0</span>)
+            </div>
+            <div id="pendingSection" class="cardsRow"></div>
+
+            <div class="sectionTitle">
+                Completed Tasks (<span id="completedCount">0</span>)
+            </div>
+            <div id="completedSection" class="cardsRow"></div>
+        </div>
+    </div>
+</body>
+
+</html>
